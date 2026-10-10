@@ -27,6 +27,17 @@ h1 { margin: 6px 0 8px; font-family: var(--font-sign); font-weight: 800; font-si
 h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .08em; color: var(--c-turquoise); margin-top: 6px; }
 .lede { max-width: 62ch; margin: 0 0 22px; color: rgba(255, 255, 255, .88); }
 
+/* PDF downloads ------------------------------------------------------------ */
+.downloads { margin: 0 0 24px; }
+.downloads h2 { margin: 0 0 10px; font-family: var(--font-sign); font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .7); }
+.downloads h2 span { margin-left: 8px; font-family: var(--font-text); font-weight: 400; font-style: italic; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--c-turquoise); }
+.dl-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.dl { display: flex; align-items: flex-start; gap: 10px; height: 100%; padding: 10px 14px; border: 1px solid rgba(255, 255, 255, .22); border-radius: 8px; background: rgba(255, 255, 255, .06); color: var(--c-white); text-decoration: none; }
+.dl:hover { background: rgba(255, 255, 255, .12); border-color: var(--c-yellow); }
+.dl svg { flex: none; width: 22px; height: 22px; margin-top: 1px; color: var(--c-yellow); }
+.dl b { display: block; font-family: var(--font-sign); font-weight: 700; font-size: 18px; letter-spacing: .04em; color: var(--c-yellow); }
+.dl i { display: block; font-style: normal; font-size: 13px; line-height: 1.35; color: rgba(255, 255, 255, .78); }
+
 .board { border: 1px solid rgba(255, 255, 255, .18); border-radius: 10px; overflow: hidden; background: #0B2545; }
 .board-head, .board-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 150px 120px; align-items: center; column-gap: 14px; padding: 0 14px; }
 .board-head { padding-top: 8px; padding-bottom: 8px; font-family: var(--font-sign); font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, .55); border-bottom: 1px solid rgba(255, 255, 255, .18); }

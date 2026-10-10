@@ -7,7 +7,7 @@
 import puppeteer from "puppeteer-core";
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { ROOT, launchOptions, loadProject, writeOut } from "./lib.mjs";
 
@@ -48,6 +48,9 @@ async function newPage(ctx, viewport, opts = {}) {
   });
   t(G, "Loads without script errors", page.errors.length === 0, page.errors.join("; "));
   t(G, "All 180 cards present: A–D 40 each (20 Q + 20 A), E 20 questions, no Gate E answers", counts.total === 180 && ["A", "B", "C", "D"].every((g) => counts[g] === 40) && counts.E === 20 && counts.eAnswers === 0 && counts.answers === 80, JSON.stringify(counts));
+  const dls = await page.evaluate(() => [...document.querySelectorAll(".downloads a.dl")].map((a) => ({ href: a.href, download: a.hasAttribute("download") })));
+  const badDl = dls.filter((d) => !d.download || !existsSync(fileURLToPath(d.href)));
+  t(G, "Download links: all 4 PDFs (home A4, print shop, A3 cut sheets, print specifications) exist", dls.length === 4 && badDl.length === 0, badDl.map((d) => d.href).join(", ") || `${dls.length} links`);
 
   const init = await page.evaluate(() => {
     const s = [...document.querySelectorAll("#gallery .slot")];

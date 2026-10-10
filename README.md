@@ -26,7 +26,7 @@ exports/cards_print_shop.pdf      ← for the print department (1 card side per 
 exports/cards_home_print_A4.pdf   ← print at home/office (A4, two-sided, with guide + alignment test)
 exports/cards_manual_cut_A3.pdf   ← low-cost: card fronts only, 18 per A3 sheet, print one-sided and cut by hand
 exports/print_specifications.pdf  ← print specification sheet for the print department (also docs/PRINT_SPECIFICATIONS.md)
-preview/preview_gallery.html      ← animated design preview: cards face down, click to flip
+preview/preview_gallery.html      ← animated design preview: cards face down, click to flip; download buttons for the 4 PDFs
 editor/index.html                 ← question editor for colleagues (runs in the browser, exports JSON/CSV)
 QC_REPORT.md                      ← counts, automated checks, sources, open issues
 cards_source.zip                  ← everything below + PDFs, ready to hand over
