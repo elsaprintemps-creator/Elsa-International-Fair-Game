@@ -12,6 +12,7 @@ const geo = readJSON("build/print-geometry.json");
 const partners = readJSON("data/partners.json");
 const pdfCheck = existsSync(join(ROOT, "build/pdf-check.json")) ? readJSON("build/pdf-check.json") : null;
 const web = existsSync(join(ROOT, "build/web-test-report.json")) ? readJSON("build/web-test-report.json") : null;
+const docx = existsSync(join(ROOT, "build/docx-check.json")) ? readJSON("build/docx-check.json") : null;
 const cards = data.cards;
 
 const tick = (ok) => (ok ? "✅" : "❌");
@@ -35,6 +36,7 @@ const deliverables = [
   [settings.home_print.output, "Home printing, A4, duplex"],
   [settings.print_shop.output, "Print shop, one card side per page, bleed + crop marks"],
   ...(settings.manual_cut_a3?.output ? [[settings.manual_cut_a3.output, "A3 sheets for cutting by hand (fronts only)"]] : []),
+  ["exports/cards_editable.docx", "Every card as an editable Word file (colleagues change questions/answers on the cards; npm run import-word reads them back)"],
   [settings.spec_sheet.output_pdf, "Print specification sheet for the print department (PDF)"],
   [settings.spec_sheet.output_md, "Print specification sheet (Markdown, same content)"],
   ["docs/prototype.png", "Design prototype (Gate A Q+A, Gate E card, five backs)"],
@@ -63,13 +65,13 @@ const sourceRows = factualQs.map((q) => {
 const pstat = (s) => partners.partners.filter((p) => p.verification === s);
 const confirmRows = pstat("needs-confirmation").map((p) => `| ${mdEsc(p.supplied_name)} | ${mdEsc(p.resolved_name)} | ${mdEsc(p.city)}, ${mdEsc(p.country)} | ${mdEsc(p.note)} |`).join("\n");
 
-const allOk = val.ok && pdf.ok && (!pdfCheck || pdfCheck.ok) && (!web || web.ok);
+const allOk = val.ok && pdf.ok && (!pdfCheck || pdfCheck.ok) && (!web || web.ok) && (!docx || docx.ok);
 const pass = (r) => (r ? `${r.checks ? r.checks.filter((c) => c.ok).length : r.passed}/${r.checks ? r.checks.length : r.total}` : "not run");
 const md = `# QC Report — International Fair "Airport Gates" card game
 
 _Generated automatically by \`npm run build\` on ${new Date().toISOString().slice(0, 10)}. Manual review notes are maintained in \`scripts/qc-report.mjs\`._
 
-**Overall automated status: ${allOk ? "✅ all automated checks passed" : "❌ see failures below"}** — ${val.checks.filter((c) => c.ok).length}/${val.checks.length} content checks, ${pdf.checks.filter((c) => c.ok).length}/${pdf.checks.length} render/layout checks, ${pass(pdfCheck)} finished-PDF inspection checks, ${pass(web)} browser tests (preview + editor).
+**Overall automated status: ${allOk ? "✅ all automated checks passed" : "❌ see failures below"}** — ${val.checks.filter((c) => c.ok).length}/${val.checks.length} content checks, ${pdf.checks.filter((c) => c.ok).length}/${pdf.checks.length} render/layout checks, ${pass(pdfCheck)} finished-PDF inspection checks, ${pass(web)} browser tests (preview + editor), ${pass(docx)} Word-file checks.
 
 ## 1. Card counts
 
@@ -115,6 +117,12 @@ Embedded fonts (print shop): ${pdfCheck.shop.fonts.join(", ")}. Raster images: $
 ${web ? `Run in headless Chrome against the generated pages (desktop 1366–1440 px, mobile 375–390 px, reduced motion). Screenshots: \`build/screenshots/\`.
 
 ${web.results.map((r) => `- ${tick(r.ok)} [${r.group}] ${mdEsc(r.name)}`).join("\n")}` : "_Not run._"}
+
+## 3d. Editable Word file (\`scripts/check-docx.mjs\`)
+
+${docx ? `\`exports/cards_editable.docx\` is re-opened without Word and checked: each card's English and French text box, the round trip of every text, page format, embedded fonts and pictures. Before release it was also opened, edited (with and without tracked changes) and re-saved in Microsoft Word, then read back with \`npm run import-word -- --dry-run\`.
+
+${docx.checks.map((c) => `- ${tick(c.ok)} ${mdEsc(c.name)}${c.detail ? ` (${mdEsc(c.detail)})` : ""}`).join("\n")}` : "_Not run._"}
 
 ## 4. Source verification
 

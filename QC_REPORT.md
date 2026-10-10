@@ -2,7 +2,7 @@
 
 _Generated automatically by `npm run build` on 2026-10-10. Manual review notes are maintained in `scripts/qc-report.mjs`._
 
-**Overall automated status: ✅ all automated checks passed** — 68/68 content checks, 20/20 render/layout checks, 28/28 finished-PDF inspection checks, 62/62 browser tests (preview + editor).
+**Overall automated status: ✅ all automated checks passed** — 68/68 content checks, 20/20 render/layout checks, 28/28 finished-PDF inspection checks, 62/62 browser tests (preview + editor), 6/6 Word-file checks.
 
 ## 1. Card counts
 
@@ -169,7 +169,7 @@ Run in headless Chrome against the generated pages (desktop 1366–1440 px, mobi
 
 - ✅ [preview] Loads without script errors
 - ✅ [preview] All 180 cards present: A–D 40 each (20 Q + 20 A), E 20 questions, no Gate E answers
-- ✅ [preview] Download links: all 4 PDFs (home A4, print shop, A3 cut sheets, print specifications) exist
+- ✅ [preview] Download links: home A4, print shop and A3 PDFs plus the editable Word file all exist
 - ✅ [preview] Title reads “FGES Airport Gates”
 - ✅ [preview] First page shows the five gates (each with its own back) and no cards
 - ✅ [preview] Each gate states its card count (A–D: 40 cards, E: 20 discussion cards)
@@ -229,6 +229,17 @@ Run in headless Chrome against the generated pages (desktop 1366–1440 px, mobi
 - ✅ [editor] “Discard all edits” asks first, then restores the master text and clears the draft
 - ✅ [editor] Mobile (390 px): no horizontal scrolling; preview hidden until asked
 - ✅ [editor] Mobile: “Preview” opens the live card preview (focus on Close), Escape closes it
+
+## 3d. Editable Word file (`scripts/check-docx.mjs`)
+
+`exports/cards_editable.docx` is re-opened without Word and checked: each card's English and French text box, the round trip of every text, page format, embedded fonts and pictures. Before release it was also opened, edited (with and without tracked changes) and re-saved in Microsoft Word, then read back with `npm run import-word -- --dry-run`.
+
+- ✅ Every card has its English and French text box (360) (360 boxes)
+- ✅ Every text reads back exactly as data/cards.json (importing the untouched file changes nothing)
+- ✅ 180 cards drawn as Word tables, plus one layout table per page (203 tables, 24 pages)
+- ✅ Pages are A4 landscape
+- ✅ Card fonts embedded (Atkinson Hyperlegible regular/bold/italic, Barlow Condensed bold/semibold/extrabold) (6 font files)
+- ✅ Every picture is in the file (headers, flags, dividers, arrows, barcodes) (369 pictures)
 
 ## 4. Source verification
 
@@ -395,8 +406,9 @@ Performed while authoring every card; re-read in full on the rendered prototype 
 | `exports/cards_home_print_A4.pdf` | Home printing, A4, duplex | ✅ 1486 KB |
 | `exports/cards_print_shop.pdf` | Print shop, one card side per page, bleed + crop marks | ✅ 2804 KB |
 | `exports/cards_manual_cut_A3.pdf` | A3 sheets for cutting by hand (fronts only) | ✅ 1250 KB |
+| `exports/cards_editable.docx` | Every card as an editable Word file (colleagues change questions/answers on the cards; npm run import-word reads them back) | ✅ 3417 KB |
 | `exports/print_specifications.pdf` | Print specification sheet for the print department (PDF) | ✅ 107 KB |
 | `docs/PRINT_SPECIFICATIONS.md` | Print specification sheet (Markdown, same content) | ✅ 12 KB |
 | `docs/prototype.png` | Design prototype (Gate A Q+A, Gate E card, five backs) | ✅ 478 KB |
-| `README.md` | Setup, editing and rebuild instructions | ✅ 26 KB |
+| `README.md` | Setup, editing and rebuild instructions | ✅ 31 KB |
 | `cards_source.zip` | Source, data, assets, docs, preview and PDFs | created by `npm run package` (final build step) |

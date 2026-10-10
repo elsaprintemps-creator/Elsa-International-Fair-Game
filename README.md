@@ -15,7 +15,8 @@ A bilingual (English / French) question-card game for the university Internation
 **For colleagues (no software needed, just a browser):**
 
 - **See the cards:** open [`preview/preview_gallery.html`](preview/preview_gallery.html). Choose one of the five gates to see its cards. Every card starts face down; click one to flip it.
-- **Edit the questions:** open [`editor/index.html`](editor/index.html), make your changes, then click **Export JSON** and send the file to the coordinator. See [Editing the cards in the browser](#editing-the-cards-in-the-browser-for-colleagues).
+- **Edit the questions in Word:** open [`exports/cards_editable.docx`](exports/cards_editable.docx) (also the **All cards in Word** button on the preview page), change the text directly on the cards, save and send the file to the coordinator. See [Editing the cards in Word](#editing-the-cards-in-word-for-colleagues).
+- **Or edit them in the browser:** open [`editor/index.html`](editor/index.html), make your changes, then click **Export JSON** and send the file to the coordinator. See [Editing the cards in the browser](#editing-the-cards-in-the-browser-for-colleagues).
 - **Send to the print department:** `exports/cards_print_shop.pdf` and `exports/print_specifications.pdf`. See [Printing](#printing).
 - **Print cheaply and cut by hand:** `exports/cards_manual_cut_A3.pdf`, card fronts only on 10 A3 sheets. **Print at 100 % / Actual size and check the size with a ruler first.** See [A3 sheets to cut by hand](#a3-sheets-to-cut-by-hand-fronts-only).
 
@@ -25,8 +26,9 @@ A bilingual (English / French) question-card game for the university Internation
 exports/cards_print_shop.pdf      ← for the print department (1 card side per page, bleed, crop marks, bookmarks)
 exports/cards_home_print_A4.pdf   ← print at home/office (A4, two-sided, with guide + alignment test)
 exports/cards_manual_cut_A3.pdf   ← low-cost: card fronts only, 18 per A3 sheet, print one-sided and cut by hand
+exports/cards_editable.docx       ← every card as an editable Word file (A4 landscape, real size): edit questions/answers on the cards
 exports/print_specifications.pdf  ← print specification sheet for the print department (also docs/PRINT_SPECIFICATIONS.md)
-preview/preview_gallery.html      ← animated design preview: the five gates, then one gate's cards face down, click to flip; download buttons for the 4 PDFs
+preview/preview_gallery.html      ← animated design preview: the five gates, then one gate's cards face down, click to flip; download buttons for 3 PDFs + the Word file
 editor/index.html                 ← question editor for colleagues (runs in the browser, exports JSON/CSV)
 QC_REPORT.md                      ← counts, automated checks, sources, open issues
 cards_source.zip                  ← everything below + PDFs, ready to hand over
@@ -39,7 +41,7 @@ config/print-settings.json    ← card size, bleed, margins, colour/PDF settings
 design/tokens.css             ← colour palette + fonts (single place to change colours)
 design/fonts.css              ← self-hosted font declarations
 assets/backs/*.svg            ← the five editable card-back designs
-assets/fonts/                 ← Atkinson Hyperlegible + Barlow Condensed (SIL OFL) + licences
+assets/fonts/                 ← Atkinson Hyperlegible + Barlow Condensed (SIL OFL) + licences; ttf/ = TrueType copies embedded in the Word file
 src/templates.mjs             ← card front/back HTML templates (used by the PDFs, the preview and the editor)
 src/cards.css                 ← card front layout
 src/cards-ink-saver.css       ← lighter-ink colours for the A3 manual-cut sheets only
@@ -70,11 +72,12 @@ npm run build
 4. `build:pdf`: renders the PDFs into `exports/`, sets the print-shop TrimBox/BleedBox and bookmarks, and checks text fit, fonts actually used, the preview and the duplex mapping.
 5. `check:pdf`: re-opens the finished PDFs with two independent parsers and checks validity, page sizes, boxes on every page, font embedding, image resolution, card counts, the front→back mapping (read back from the printed text) and duplex mirroring.
 6. `build:a3`: builds the A3 manual-cut PDF (`exports/cards_manual_cut_A3.pdf`), then re-opens it and measures every card (`check:a3`, results in `docs/QC_MANUAL_CUT_A3.md`). See [A3 sheets to cut by hand](#a3-sheets-to-cut-by-hand-fronts-only).
-7. `spec`: writes the print specification sheet (`exports/print_specifications.pdf`, `docs/PRINT_SPECIFICATIONS.md`).
-8. `test:web`: browser tests of the preview and the editor (flip, keyboard, reduced motion, mobile, editing, exports, imports).
-9. `prototype`: refreshes `docs/prototype.png`.
-10. `qc`: rewrites `QC_REPORT.md` from the results.
-11. `package`: rebuilds `cards_source.zip`.
+7. `build:docx`: builds the editable Word file (`exports/cards_editable.docx`), then re-opens it and checks that every card's English and French text reads back exactly as `data/cards.json` (`check:docx`). See [Editing the cards in Word](#editing-the-cards-in-word-for-colleagues).
+8. `spec`: writes the print specification sheet (`exports/print_specifications.pdf`, `docs/PRINT_SPECIFICATIONS.md`).
+9. `test:web`: browser tests of the preview and the editor (flip, keyboard, reduced motion, mobile, editing, exports, imports).
+10. `prototype`: refreshes `docs/prototype.png`.
+11. `qc`: rewrites `QC_REPORT.md` from the results.
+12. `package`: rebuilds `cards_source.zip`.
 
 `npm run snapshots` renders a few pages of the finished PDFs to PNG in `build/snapshots/` for a quick visual proof.
 
@@ -90,6 +93,28 @@ cp .env.example .env.local    # then edit CHROME_PATH if auto-detection fails
 - `.env.local`: your machine's values (git-ignored, never packaged).
 
 The scripts load `.env.local`, then `.env`. Order of precedence: a variable set in the shell, then `.env.local`, then `.env`, then `browser.executable_path` in `config/print-settings.json`.
+
+## Editing the cards in Word (for colleagues)
+
+`exports/cards_editable.docx` holds every card at its real size (56 × 87 mm) and in the same design as the PDFs: coloured header, category line, flags, English and French text, divider, footer and colour strip. Each question card sits next to its answer card (four cards per A4 landscape page); Gate E has its 20 discussion cards. Page 1 explains how to edit, in English and French.
+
+1. **Open** the file in Microsoft Word (download it with **All cards in Word** on the preview page). The two card fonts are embedded in the file, so nothing needs installing.
+2. **Click in the English or French text of a card and type.** Each text sits in its own box named after the card (e.g. "A10 · Question · English"); the box cannot be deleted by accident. Keep one multiple-choice option per line (A), B), C)), and if you change an option, update the answer card with the same letter in both languages.
+3. **Only the question and answer texts are read back.** The header (gate, card number), category and footer are fixed.
+4. **If a card grows taller than the cards next to it, its text is too long.** The printed card shrinks the text to fit (never below 7 pt), but keep it short. The Word cards are set a little smaller than the PDFs where needed, so that every untouched card is exactly 87 mm tall in Word.
+5. **Save** as a Word document (.docx) and send it to the coordinator. Tracked changes are fine: they count as accepted.
+
+**Coordinator:**
+
+```bash
+npm run import-word -- "C:/Downloads/cards_editable.docx" --dry-run   # show the changes + validate, change nothing
+npm run import-word -- "C:/Downloads/cards_editable.docx"             # back up, then update data/cards.json
+npm run build                                                         # regenerate PDFs, preview, editor and the Word file
+```
+
+`import-word` reads the text box of every card. Text that did not change keeps its exact current value (curly quotes and French non-breaking spaces added by the cards never count as edits); changed text is stored as plain text, like the rest of `data/cards.json`. It then uses the same steps as `import-edits` below: same cards check, validation on a temporary copy, backup in `data/backups/`, then replacement. A file with a missing or duplicated text box is rejected and nothing changes.
+
+**How the file is made** (`scripts/build-docx.mjs`): the cards are drawn in headless Chrome with the shared template, fonts and text fitting, and the Word file takes from that render each card's typeset text and font sizes (rounded down to Word's half-point steps, fitted with 3.5 mm of spare room because Word sets some lines slightly taller than Chrome) and pictures of the parts nobody edits (header band, flags, divider, arrows, barcode). Everything else is real Word: tables at the exact card geometry of `src/cards.css`, colours, borders, the text. Letters the card font lacks as a single character (e.g. "ō") are written as letter + combining accent, like Chrome does. The file was tested in Microsoft Word: all 180 cards render at the same height, only the card fonts are used, and a file saved by Word imports with zero changes.
 
 ## Editing the cards in the browser (for colleagues)
 
@@ -268,7 +293,7 @@ For when professional card printing is unavailable, too expensive or too slow: `
 
 ## Licences and asset sources
 
-- **Fonts:** [Atkinson Hyperlegible](https://brailleinstitute.org/freefont) (Braille Institute) and [Barlow Condensed](https://github.com/jpt/barlow) (Jeremy Tribby). Both are SIL Open Font License 1.1, installed via the `@fontsource` npm packages. The licence texts are in `assets/fonts/`.
+- **Fonts:** [Atkinson Hyperlegible](https://brailleinstitute.org/freefont) (Braille Institute) and [Barlow Condensed](https://github.com/jpt/barlow) (Jeremy Tribby). Both are SIL Open Font License 1.1, installed via the `@fontsource` npm packages. The licence texts are in `assets/fonts/`. The TrueType files in `assets/fonts/ttf/` (embedded in the Word file) come from the [Google Fonts repository](https://github.com/google/fonts/tree/main/ofl), same licence.
 - **Icons, card backs, plane glyph and barcode ornament:** drawn for this project as simple SVG paths. No third-party icon sets, stock images or AI-generated images are used.
 - **npm dependencies:** `puppeteer-core` (Apache-2.0), `pdf-lib` (MIT) and `pdfjs-dist` (Apache-2.0, used only by the build to inspect the finished PDFs). The preview and editor pages use no external libraries or CDNs.
 

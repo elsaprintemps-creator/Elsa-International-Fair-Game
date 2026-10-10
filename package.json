@@ -15,14 +15,17 @@
     "check:pdf": "node scripts/check-pdf.mjs",
     "build:a3": "node scripts/build-manual-cut.mjs && node scripts/render-manual-cut.mjs && node scripts/check-manual-cut.mjs",
     "check:a3": "node scripts/check-manual-cut.mjs",
+    "build:docx": "node scripts/build-docx.mjs && node scripts/check-docx.mjs",
+    "check:docx": "node scripts/check-docx.mjs",
     "spec": "node scripts/print-spec.mjs",
     "test:web": "node scripts/test-web.mjs",
     "snapshots": "node scripts/pdf-snapshots.mjs",
     "import-edits": "node scripts/import-edits.mjs",
+    "import-word": "node scripts/import-word.mjs",
     "prototype": "node scripts/prototype.mjs",
     "qc": "node scripts/qc-report.mjs",
     "package": "node scripts/package.mjs",
-    "build": "node scripts/validate.mjs && node scripts/build.mjs && node scripts/build-web.mjs && node scripts/render-pdf.mjs && node scripts/check-pdf.mjs && node scripts/build-manual-cut.mjs && node scripts/render-manual-cut.mjs && node scripts/check-manual-cut.mjs && node scripts/print-spec.mjs && node scripts/test-web.mjs && node scripts/prototype.mjs && node scripts/qc-report.mjs && node scripts/package.mjs"
+    "build": "node scripts/validate.mjs && node scripts/build.mjs && node scripts/build-web.mjs && node scripts/render-pdf.mjs && node scripts/check-pdf.mjs && node scripts/build-manual-cut.mjs && node scripts/render-manual-cut.mjs && node scripts/check-manual-cut.mjs && node scripts/build-docx.mjs && node scripts/check-docx.mjs && node scripts/print-spec.mjs && node scripts/test-web.mjs && node scripts/prototype.mjs && node scripts/qc-report.mjs && node scripts/package.mjs"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.5",

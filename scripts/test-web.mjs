@@ -52,7 +52,7 @@ async function newPage(ctx, viewport, opts = {}) {
   t(G, "All 180 cards present: A–D 40 each (20 Q + 20 A), E 20 questions, no Gate E answers", counts.total === 180 && ["A", "B", "C", "D"].every((g) => counts[g] === 40) && counts.E === 20 && counts.eAnswers === 0 && counts.answers === 80, JSON.stringify(counts));
   const dls = await page.evaluate(() => [...document.querySelectorAll(".downloads a.dl")].map((a) => ({ href: a.href, download: a.hasAttribute("download") })));
   const badDl = dls.filter((d) => !d.download || !existsSync(fileURLToPath(d.href)));
-  t(G, "Download links: all 4 PDFs (home A4, print shop, A3 cut sheets, print specifications) exist", dls.length === 4 && badDl.length === 0, badDl.map((d) => d.href).join(", ") || `${dls.length} links`);
+  t(G, "Download links: home A4, print shop and A3 PDFs plus the editable Word file all exist", dls.length === 4 && badDl.length === 0, badDl.map((d) => d.href).join(", ") || `${dls.length} links`);
 
   // First page: the five gates, no cards.
   const visible = () => page.evaluate(() => [...document.querySelectorAll("#gallery .slot")].filter((s) => s.offsetParent !== null).map((s) => s.dataset.gate + s.dataset.type[0]));
