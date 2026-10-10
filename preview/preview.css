@@ -18,9 +18,13 @@ body { margin: 0; background: var(--page-bg); color: var(--ink); font-family: va
 .skip { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--c-yellow); color: var(--c-navy); padding: 8px 12px; border-radius: 6px; font-weight: 700; }
 .skip:focus { top: 12px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[tabindex="-1"]:focus { outline: none; }
+[hidden] { display: none !important; }
+/* While the card text is fitted at load (it needs layout), the whole deck is laid out off-screen. */
+.measuring, .measuring[hidden] { display: block !important; position: absolute; left: -10000px; top: 0; width: 1240px; visibility: hidden; pointer-events: none; }
 button { font: inherit; color: inherit; }
 
-/* Masthead + departures board ------------------------------------------- */
+/* Masthead ---------------------------------------------------------------- */
 .masthead { background: var(--c-navy); color: var(--c-white); padding: 32px 0 28px; }
 .eyebrow { margin: 0; font-family: var(--font-sign); font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-yellow); }
 h1 { margin: 6px 0 8px; font-family: var(--font-sign); font-weight: 800; font-size: clamp(38px, 7vw, 68px); line-height: .92; letter-spacing: .005em; text-transform: uppercase; }
@@ -128,7 +132,7 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
 }
 
 /* PDF downloads ------------------------------------------------------------ */
-.downloads { margin: 0 0 24px; }
+.downloads { margin: 0; }
 .downloads h2 { margin: 0 0 10px; font-family: var(--font-sign); font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .7); }
 .downloads h2 span { margin-left: 8px; font-family: var(--font-text); font-weight: 400; font-style: italic; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--c-turquoise); }
 .dl-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
@@ -138,28 +142,53 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
 .dl b { display: block; font-family: var(--font-sign); font-weight: 700; font-size: 18px; letter-spacing: .04em; color: var(--c-yellow); }
 .dl i { display: block; font-style: normal; font-size: 13px; line-height: 1.35; color: rgba(255, 255, 255, .78); }
 
-.board { border: 1px solid rgba(255, 255, 255, .18); border-radius: 10px; overflow: hidden; background: #0B2545; }
-.board-head, .board-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 150px 120px; align-items: center; column-gap: 14px; padding: 0 14px; }
-.board-head { padding-top: 8px; padding-bottom: 8px; font-family: var(--font-sign); font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, .55); border-bottom: 1px solid rgba(255, 255, 255, .18); }
-.board-row {
-  width: 100%; min-height: 50px; padding-top: 6px; padding-bottom: 6px; text-align: left; cursor: pointer;
-  background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, .1); color: var(--c-white);
-  font-family: var(--font-sign); position: relative;
+/* First page: the five gates ------------------------------------------- */
+.picker { margin: 28px 0 10px; padding: 24px 20px 28px; background: var(--c-white); border-radius: 14px; }
+.picker h2 { margin: 0; font-family: var(--font-sign); font-weight: 800; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.05; }
+.picker h2 span { margin-left: 8px; font-family: var(--font-text); font-weight: 400; font-style: italic; font-size: 16px; color: var(--c-teal-deep); }
+.picker > p { margin: 6px 0 22px; max-width: 70ch; color: var(--ink-soft); font-size: 15px; }
+.gates { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px 20px; }
+.gate-tile { display: flex; flex-direction: column; gap: 14px; height: 100%; border-radius: 12px; color: var(--c-navy); text-decoration: none; }
+.gate-tile:focus-visible { outline: 3px solid var(--c-navy); outline-offset: 6px; }
+/* The back artwork, cropped to the trim line like a finished card (62 × 93 mm artboard, 3 mm bleed each side). */
+.tile-art {
+  position: relative; display: block; aspect-ratio: 56 / 87; overflow: hidden; border-radius: 5.4% / 3.45%;
+  box-shadow: 0 1px 2px rgba(11, 37, 69, .28), 0 8px 22px rgba(11, 37, 69, .14);
+  transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
 }
-.board-row:last-child { border-bottom: 0; }
-.board-row:hover { background: rgba(255, 255, 255, .05); }
-.board-row[aria-pressed="true"] { background: rgba(31, 181, 190, .16); }
-.board-row[aria-pressed="true"]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c-yellow); }
-.board-row:focus-visible { outline-offset: -3px; }
-.b-gate { display: grid; place-items: center; width: 40px; height: 36px; border-radius: 5px; font-weight: 800; font-size: 24px; line-height: 1; background: var(--g-field, var(--c-white)); color: var(--g-ink, var(--c-navy)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
-.b-gate.all { font-size: 13px; letter-spacing: .08em; background: transparent; color: var(--c-yellow); box-shadow: inset 0 0 0 1.5px var(--c-yellow); }
-.b-dest { min-width: 0; }
-.b-dest b { display: block; font-weight: 700; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; color: var(--c-yellow); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.b-dest i { display: block; font-family: var(--font-text); font-size: 13px; color: rgba(255, 255, 255, .7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.b-cards { font-weight: 600; font-size: 16px; letter-spacing: .06em; color: var(--c-white); }
-.b-status { font-weight: 700; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .45); }
-.board-row[aria-pressed="true"] .b-status { color: var(--c-yellow); }
-.board-row[aria-pressed="true"] .b-status::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c-yellow); margin-right: 7px; vertical-align: 1px; }
+.tile-art .card.back { position: absolute; left: -5.357%; top: -3.448%; width: 110.714%; height: 106.897%; }
+.gate-tile:hover .tile-art, .gate-tile:focus-visible .tile-art { transform: translateY(-6px) rotate(-1.2deg); box-shadow: 0 4px 8px rgba(11, 37, 69, .25), 0 18px 34px rgba(11, 37, 69, .22); }
+.tile-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.tile-gate { font-family: var(--font-sign); font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-teal-deep); }
+.tile-name { font-family: var(--font-sign); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: .02em; text-transform: uppercase; }
+.tile-fr { font-size: 14px; line-height: 1.3; color: var(--c-teal-deep); }
+.tile-count { margin: 6px 0 12px; font-family: var(--font-sign); font-weight: 600; font-size: 15px; letter-spacing: .04em; color: var(--ink-soft); }
+.tile-cta {
+  margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px 7px 14px; border-radius: 999px;
+  background: var(--c-navy); color: var(--c-white); font-family: var(--font-sign); font-weight: 700; font-size: 15px; letter-spacing: .06em; text-transform: uppercase;
+  transition: background-color .2s, color .2s;
+}
+.tile-cta svg { width: 16px; height: 16px; color: var(--c-yellow); transition: transform .2s; }
+.gate-tile:hover .tile-cta, .gate-tile:focus-visible .tile-cta { background: var(--c-yellow); color: var(--c-navy); }
+.gate-tile:hover .tile-cta svg, .gate-tile:focus-visible .tile-cta svg { color: var(--c-navy); transform: translateX(3px); }
+
+/* Gate pages: way back to the five gates + quick switch ------------------ */
+.gatebar { background: var(--c-navy); color: var(--c-white); }
+.gatebar-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-top: 12px; padding-bottom: 12px; }
+.home-link { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 1px solid rgba(255, 255, 255, .22); border-radius: 8px; color: var(--c-white); text-decoration: none; }
+.home-link:hover { border-color: var(--c-yellow); background: rgba(255, 255, 255, .08); }
+.home-link svg { flex: none; width: 22px; height: 22px; color: var(--c-yellow); }
+.home-link b { display: block; font-family: var(--font-sign); font-weight: 700; font-size: 17px; line-height: 1.1; letter-spacing: .06em; text-transform: uppercase; color: var(--c-yellow); }
+.home-link i { display: block; font-size: 12px; line-height: 1.3; color: rgba(255, 255, 255, .72); }
+.brand { flex: 1; margin: 0; font-family: var(--font-sign); font-weight: 800; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; }
+.gate-tabs { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+.gate-tab {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 6px; text-decoration: none;
+  background: var(--g-field); color: var(--g-ink); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3);
+  font-family: var(--font-sign); font-weight: 800; font-size: 22px; line-height: 1; transition: transform .2s;
+}
+.gate-tab:hover { transform: translateY(-2px); }
+.gate-tab[aria-current="page"] { outline: 3px solid var(--c-yellow); outline-offset: 3px; }
 
 /* Toolbar ---------------------------------------------------------------- */
 .toolbar { position: sticky; top: 0; z-index: 20; background: var(--c-white); border-bottom: 1px solid var(--line); box-shadow: 0 2px 10px rgba(11, 37, 69, .07); }
@@ -189,14 +218,15 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
 .count { font-family: var(--font-sign); font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 
 /* Gate sections ---------------------------------------------------------- */
-.gate-sec { margin: 26px 0 34px; }
-.gate-sec[hidden] { display: none; }
+.gate-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 28px; margin: 26px 0 0; }
+.gate-head-text { flex: 1 1 420px; }
+.gate-sec { margin: 18px 0 34px; }
 .gate-title { display: flex; align-items: center; gap: 14px; margin: 0 0 4px; }
 .gate-title .letter { flex: none; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 8px; background: var(--g-field); color: var(--g-ink); font-family: var(--font-sign); font-weight: 800; font-size: 34px; line-height: 1; }
 .gate-title h2 { margin: 0; font-family: var(--font-sign); font-weight: 800; font-size: clamp(24px, 3.4vw, 32px); line-height: 1.02; letter-spacing: .01em; }
 .gate-title h2 small { display: block; font-family: var(--font-text); font-weight: 400; font-style: italic; font-size: 15px; letter-spacing: 0; color: var(--c-teal-deep); margin-top: 3px; }
-.gate-note { margin: 6px 0 16px 68px; font-size: 14px; color: var(--ink-soft); max-width: 70ch; }
-.empty-note { margin: 0 0 0 68px; padding: 12px 14px; border: 1.5px dashed var(--line); border-radius: 8px; font-size: 15px; }
+.gate-note { margin: 6px 0 0 68px; font-size: 14px; color: var(--ink-soft); max-width: 70ch; }
+.empty-note { margin: 0; padding: 12px 14px; border: 1.5px dashed var(--line); border-radius: 8px; font-size: 15px; }
 .grid { display: flex; flex-wrap: wrap; gap: 26px 30px; }
 .pair { display: flex; flex-direction: column; gap: 8px; }
 .pair[hidden] { display: none; }
@@ -205,7 +235,7 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
 .pair-cards { display: flex; flex-wrap: wrap; gap: 16px; }
 
 /* Flip card ---------------------------------------------------------------- */
-.gallery, .backs-row { --face-w: calc(var(--trim-w) * var(--s)); --face-h: calc(var(--trim-h) * var(--s)); }
+.gallery { --face-w: calc(var(--trim-w) * var(--s)); --face-h: calc(var(--trim-h) * var(--s)); }
 .show-guides .gallery { --face-w: calc(var(--card-w) * var(--s)); --face-h: calc(var(--card-h) * var(--s)); }
 .slot { margin: 0; display: flex; flex-direction: column; gap: 7px; width: var(--face-w); }
 .slot[hidden] { display: none; }
@@ -248,33 +278,72 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
 .cap .side { font-weight: 600; letter-spacing: .06em; }
 .slot[data-face="front"] .cap .side { color: var(--c-teal-deep); }
 
-/* Backs overview --------------------------------------------------------- */
-.backs { margin: 40px 0 10px; padding: 22px 20px 26px; background: var(--c-white); border-radius: 14px; }
-.backs h2 { margin: 0; font-family: var(--font-sign); font-weight: 800; font-size: 28px; }
-.backs h2 span { font-family: var(--font-text); font-weight: 400; font-style: italic; font-size: 15px; color: var(--c-teal-deep); margin-left: 8px; }
-.backs > p { margin: 4px 0 18px; max-width: 70ch; color: var(--ink-soft); font-size: 15px; }
-.backs-row { --s: 0.9; display: flex; flex-wrap: wrap; gap: 18px; }
-.backs-row figure { margin: 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-sign); font-weight: 700; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
-.backs-row .face { position: relative; width: var(--face-w); height: var(--face-h); }
+/* Answer cards: the same back artwork on a lighter field of the gate's own colour, so question and answer
+   cards are easy to tell apart face down. Only the background changes (motif, letter and text keep their
+   colours) and only on this page: the print PDFs keep one back per gate. Ink contrast stays ≥ 3.5:1. */
+@supports (color: color-mix(in srgb, red 50%, white)) {
+  .slot[data-type="answer"] .face-back, .legend-item.is-answer .face {
+    --gate-A-field: color-mix(in srgb, var(--c-turquoise) 55%, var(--c-white));
+    --gate-B-field: color-mix(in srgb, var(--c-navy) 65%, var(--c-white));
+    --gate-C-field: color-mix(in srgb, var(--c-yellow) 50%, var(--c-white));
+    --gate-D-field: color-mix(in srgb, var(--c-teal-deep) 75%, var(--c-white));
+    --gate-E-field: color-mix(in srgb, var(--c-bordeaux) 65%, var(--c-white));
+  }
+}
+
+/* Legend: one question back and one answer back of the open gate. */
+.legend { --s: .34; --face-w: calc(var(--trim-w) * var(--s)); --face-h: calc(var(--trim-h) * var(--s)); display: flex; flex-wrap: wrap; gap: 14px 22px; padding: 12px 18px 12px 12px; background: var(--c-white); border-radius: 12px; }
+.legend-item { margin: 0; display: flex; align-items: center; gap: 12px; }
+.legend .face { position: relative; flex: none; width: var(--face-w); height: var(--face-h); }
+.legend figcaption { display: flex; flex-direction: column; gap: 1px; max-width: 18ch; }
+.legend figcaption b { font-family: var(--font-sign); font-weight: 700; font-size: 17px; letter-spacing: .06em; text-transform: uppercase; }
+.legend figcaption span { font-size: 14px; }
+.legend figcaption i { font-size: 12px; line-height: 1.3; color: var(--c-teal-deep); }
+
+/* Pager: previous gate · all gates · next gate. */
+.pager { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; margin: 8px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.pager a { padding: 10px 14px; border: 1.5px solid transparent; border-radius: 8px; background: var(--c-white); color: var(--c-navy); text-decoration: none; font-family: var(--font-sign); font-weight: 700; font-size: 17px; letter-spacing: .04em; }
+.pager a:hover { border-color: var(--c-navy); }
+.pager a span:not([aria-hidden]) { font-family: var(--font-text); font-weight: 400; font-size: 13px; letter-spacing: 0; color: var(--ink-soft); }
+.pager-prev { justify-self: start; }
+.pager .pager-home { justify-self: center; background: var(--c-yellow); text-transform: uppercase; letter-spacing: .08em; }
+.pager-next { justify-self: end; text-align: right; }
 
 .foot { margin: 28px 0 40px; font-size: 13px; color: var(--ink-soft); }
 .noscript { margin: 20px; padding: 16px; background: var(--c-yellow-tint); border-left: 5px solid var(--c-yellow); }
 
 /* Small screens ---------------------------------------------------------- */
+@media (max-width: 1000px) {
+  .gates { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 720px) {
   .masthead { padding-top: 24px; }
-  .board-head { display: none; }
-  .board-row { grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 10px; padding-left: 10px; padding-right: 10px; }
-  .b-gate { width: 36px; height: 34px; font-size: 21px; }
-  .b-dest b { font-size: 17px; white-space: normal; line-height: 1.1; }
-  .b-dest i { white-space: normal; line-height: 1.3; margin-top: 2px; }
-  .b-status { display: none; }
-  .b-cards { font-size: 14px; text-align: right; }
+  .brand, .home-link i { display: none; }
+  .gatebar-inner { justify-content: space-between; gap: 10px; }
+  .home-link { padding: 6px 10px 6px 4px; gap: 4px; }
+  .gate-tabs { gap: 5px; }
+  .gate-tab { width: 34px; height: 36px; font-size: 20px; }
+  .legend { --s: .26; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; width: 100%; padding: 12px; }
+  .legend-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .legend figcaption b { font-size: 15px; }
   .toolbar { position: static; }
   .toolbar-inner { gap: 10px 14px; }
   .actions { flex-wrap: wrap; }
-  .gate-note, .empty-note { margin-left: 0; }
+  .gate-note { margin-left: 0; }
   .hint-inline { display: none; }
+  .pager { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pager .pager-home { grid-column: 1 / -1; grid-row: 1; justify-self: stretch; text-align: center; }
+}
+/* Phones: each gate becomes a row (small back on the left, details on the right). */
+@media (max-width: 640px) {
+  .picker { padding: 20px 14px 22px; }
+  .gates { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .gate-tile { flex-direction: row; align-items: center; gap: 16px; padding: 10px; background: var(--c-turquoise-tint); }
+  .tile-art { flex: none; width: 92px; }
+  .gate-tile:hover .tile-art, .gate-tile:focus-visible .tile-art { transform: none; }
+  .tile-name { font-size: 18px; }
+  .tile-count { margin: 4px 0 8px; font-size: 14px; }
+  .tile-cta { padding: 5px 10px 5px 12px; font-size: 14px; }
 }
 
 /* Reduced motion: cards swap faces instantly, no lift; the plane and clouds hold still. */

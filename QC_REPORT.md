@@ -2,7 +2,7 @@
 
 _Generated automatically by `npm run build` on 2026-10-10. Manual review notes are maintained in `scripts/qc-report.mjs`._
 
-**Overall automated status: ✅ all automated checks passed** — 68/68 content checks, 18/18 render/layout checks, 28/28 finished-PDF inspection checks, 52/52 browser tests (preview + editor).
+**Overall automated status: ✅ all automated checks passed** — 68/68 content checks, 20/20 render/layout checks, 28/28 finished-PDF inspection checks, 62/62 browser tests (preview + editor).
 
 ## 1. Card counts
 
@@ -104,6 +104,8 @@ Warnings for manual review: none.
 - ✅ Every card's text fits inside the safe area (preview, home PDF, print-shop PDF)
 - ✅ No clipped labels (header, category, footer)
 - ✅ Smallest body text ≥ configured minimum
+- ✅ Safe area (print-shop): every label, icon and text block on every front and back is ≥ 3.5 mm inside the trim (3060 elements measured; closest 3.5 mm (E20/question, ftr-code))
+- ✅ Safe area (home A4): every label, icon and text block on every front and back is ≥ 3.5 mm inside the trim (3195 elements measured; closest 3.5 mm (E20/question, ftr-code))
 - ✅ Fonts loaded in every render
 - ✅ Only the project fonts are used (Atkinson Hyperlegible, Barlow Condensed) — no system-font fallback
 - ✅ No script errors while rendering
@@ -114,7 +116,7 @@ Warnings for manual review: none.
 - ✅ Gate-pure sheets: one gate per sheet
 - ✅ Home print: the cut marks fit on the paper (margin ≥ mark offset + length + 3 mm printer edge) (margins 12 × 9 mm)
 
-**Text fit.** Fonts start at 9.2/8.6 pt (questions, EN/FR) and 12/11.2 pt (answers) and may only shrink to 7 pt. Smallest sizes actually used: questions 7.6 pt EN / 7.1 pt FR; answers 11.2 pt EN / 10.45 pt FR. Cards that needed shrinking: A1 (Q), A3 (Q), A4 (Q), A5 (Q), A8 (Q), A10 (Q), A11 (Q), A13 (Q), A15 (Q), A16 (Q), A18 (Q), A19 (Q), A20 (Q), B2 (Q), B3 (Q), B5 (Q), B6 (Q), B8 (Q), B10 (Q), B11 (Q), B13 (Q), B14 (Q), B15 (Q), B16 (Q), B17 (Q), B19 (Q), B20 (Q), C3 (Q), C5 (Q), C6 (Q), C7 (Q), C9 (Q), C12 (Q), C13 (Q), C15 (Q), C18 (Q), C20 (Q), D1 (Q), D4 (Q), D5 (Q), D6 (Q), D7 (Q), D8 (Q), D9 (Q), D10 (Q), D11 (Q), D12 (Q), D13 (Q), D15 (Q), D17 (Q), D18 (Q), D19 (Q), A8 (A), A13 (A), C8 (A), D17 (A), D18 (A), D19 (A). All text boxes sit inside the 3.5 mm safe margin by construction, and overflow is measured in the browser on every card in all three renders (gallery, home PDF, print-shop PDF).
+**Text fit.** Fonts start at 9.2/8.6 pt (questions, EN/FR) and 12/11.2 pt (answers) and may only shrink to 7 pt. Smallest sizes actually used: questions 7.2 pt EN / 7 pt FR; answers 10.8 pt EN / 10.08 pt FR. Cards that needed shrinking: A1 (Q), A3 (Q), A4 (Q), A5 (Q), A8 (Q), A10 (Q), A11 (Q), A13 (Q), A15 (Q), A16 (Q), A18 (Q), A19 (Q), A20 (Q), B2 (Q), B3 (Q), B5 (Q), B6 (Q), B8 (Q), B10 (Q), B11 (Q), B13 (Q), B14 (Q), B15 (Q), B16 (Q), B17 (Q), B19 (Q), B20 (Q), C3 (Q), C5 (Q), C6 (Q), C7 (Q), C9 (Q), C12 (Q), C13 (Q), C15 (Q), C18 (Q), C20 (Q), D1 (Q), D4 (Q), D5 (Q), D6 (Q), D7 (Q), D8 (Q), D9 (Q), D10 (Q), D11 (Q), D12 (Q), D13 (Q), D15 (Q), D17 (Q), D18 (Q), D19 (Q), A8 (A), A13 (A), C8 (A), D17 (A), D18 (A), D19 (A). All text boxes sit inside the 3.5 mm safe margin by construction, and overflow is measured in the browser on every card in all three renders (gallery, home PDF, print-shop PDF).
 
 **Geometry.** Trim 56 × 87 mm, bleed 3 mm (artwork 62 × 93 mm), safe margin 3.5 mm.
 - Home PDF: 50 A4 pages = 2 instruction pages + 2 alignment-test pages + 23 duplex card sheets (front/back pairs). 3 × 3 cards per sheet with bleed, margins 12 mm (left/right) × 9 mm (top/bottom); crop marks in the margins of the front side.
@@ -167,24 +169,34 @@ Run in headless Chrome against the generated pages (desktop 1366–1440 px, mobi
 
 - ✅ [preview] Loads without script errors
 - ✅ [preview] All 180 cards present: A–D 40 each (20 Q + 20 A), E 20 questions, no Gate E answers
+- ✅ [preview] Download links: all 4 PDFs (home A4, print shop, A3 cut sheets, print specifications) exist
+- ✅ [preview] Title reads “FGES Airport Gates”
+- ✅ [preview] First page shows the five gates (each with its own back) and no cards
+- ✅ [preview] Each gate states its card count (A–D: 40 cards, E: 20 discussion cards)
+- ✅ [preview] Clicking a gate shows only that gate's 40 cards (20 questions + 20 answers)
+- ✅ [preview] The open gate's heading takes focus (screen readers hear which gate opened)
 - ✅ [preview] Every card starts face down (back facing the viewer), fronts hidden from screen readers
 - ✅ [preview] Every card shows its own gate's back design
 - ✅ [preview] Hint “Click a card to flip it” is shown
-- ✅ [preview] All card text fits (same fitting as the PDFs)
+- ✅ [preview] All card text fits (same fitting as the PDFs, all 180 cards)
+- ✅ [preview] Answer backs are lighter than question backs (A–D); question backs keep the gate colour, back text keeps its colour
+- ✅ [preview] Legend explains question vs answer backs
 - ✅ [preview] Click flips the card to its front with a 3D rotation (mid-animation the card is edge-on, then fully turned)
 - ✅ [preview] Clicking again flips it back to the gate back
 - ✅ [preview] Keyboard: cards are focusable buttons; Enter flips to the front, Space flips back
 - ✅ [preview] Keyboard: Tab from the toolbar reaches the cards
 - ✅ [preview] Keyboard focus is visible on the card
-- ✅ [preview] “Flip all to fronts” then “Reset all to backs” returns every card to its back
-- ✅ [preview] Gate filter (departures board) shows only that gate
+- ✅ [preview] “Flip all to fronts” turns the open gate's cards only; “Reset all to backs” returns them to their backs
+- ✅ [preview] Gate switcher opens another gate (only its cards) and marks it as current
 - ✅ [preview] Type filter: answers only
 - ✅ [preview] Gate E with “Answers” shows no cards and explains why
 - ✅ [preview] Filter state is kept in the link (#gate=…&show=…)
+- ✅ [preview] Browser Back returns to the previous gate; “All gates” returns to the five gates
 - ✅ [preview] Opening a link with #gate=D&show=question restores that view
 - ✅ [preview] Card size buttons enlarge the cards
 - ✅ [preview] Print guides show bleed, trim and safe-area lines
 - ✅ [preview] Reduced motion: no flip animation (instant face change, no lift)
+- ✅ [preview] Mobile (375 px): the five gates fit the screen width, no horizontal scrolling
 - ✅ [preview] Mobile (375 px): no horizontal scrolling and cards fit the screen
 - ✅ [preview] Mobile: smallest card text is still at least 11 px on screen
 - ✅ [preview] Mobile: tapping a card flips it
@@ -370,7 +382,7 @@ Performed while authoring every card; re-read in full on the rendered prototype 
 | `data/cards.json` | Structured records for all 180 cards (source of truth) | ✅ 117 KB |
 | `data/cards.csv` | Flat export (UTF-8 with BOM, opens in Excel) | ✅ 80 KB |
 | `data/partners.json` | Partner universities → resolved city/country + verification status | ✅ 43 KB |
-| `preview/preview_gallery.html` | Animated design preview: every card face down, click to flip; the five backs | ✅ 4 KB |
+| `preview/preview_gallery.html` | Animated design preview: the five gates; each gate's cards face down (lighter answer backs), click to flip | ✅ 8 KB |
 | `editor/index.html` | Question editor for colleagues (browser only, exports JSON/CSV) | ✅ 4 KB |
 | `assets/backs/back_gate_A_food_language_traditions.svg` | Back — Gate A | ✅ 4 KB |
 | `assets/backs/back_gate_B_campus_city.svg` | Back — Gate B | ✅ 4 KB |
@@ -380,11 +392,11 @@ Performed while authoring every card; re-read in full on the rendered prototype 
 | `config/print-settings.json` | Card size, bleed, margins, page layout, duplex orientation | ✅ 7 KB |
 | `design/tokens.css` | Colour + font design tokens | ✅ 2 KB |
 | `src/templates.mjs` | Editable card generation source (HTML/CSS/JS) | ✅ 6 KB |
-| `exports/cards_home_print_A4.pdf` | Home printing, A4, duplex | ✅ 1488 KB |
+| `exports/cards_home_print_A4.pdf` | Home printing, A4, duplex | ✅ 1486 KB |
 | `exports/cards_print_shop.pdf` | Print shop, one card side per page, bleed + crop marks | ✅ 2804 KB |
 | `exports/cards_manual_cut_A3.pdf` | A3 sheets for cutting by hand (fronts only) | ✅ 1250 KB |
 | `exports/print_specifications.pdf` | Print specification sheet for the print department (PDF) | ✅ 107 KB |
 | `docs/PRINT_SPECIFICATIONS.md` | Print specification sheet (Markdown, same content) | ✅ 12 KB |
 | `docs/prototype.png` | Design prototype (Gate A Q+A, Gate E card, five backs) | ✅ 478 KB |
-| `README.md` | Setup, editing and rebuild instructions | ✅ 20 KB |
+| `README.md` | Setup, editing and rebuild instructions | ✅ 26 KB |
 | `cards_source.zip` | Source, data, assets, docs, preview and PDFs | created by `npm run package` (final build step) |

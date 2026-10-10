@@ -1,12 +1,13 @@
 // Animated card-design preview.
 // Every card is drawn with window.CardKit (the same templates, fonts and back artwork as the print PDFs)
 // from window.CARDS_DATA (a build-time copy of data/cards.json). Cards start face down; clicking flips them.
+// The first page shows the five gates; opening one (#gate=A … #gate=E) shows only that gate's cards.
 (function () {
   "use strict";
   const kit = window.CardKit;
   const data = window.CARDS_DATA;
   if (!kit || !data) {
-    document.getElementById("gallery").innerHTML = '<p class="empty-note">The card data could not be loaded. Run <code>npm run build</code> to regenerate <code>preview/generated/</code>.</p>';
+    document.getElementById("gates").innerHTML = '<li class="empty-note">The card data could not be loaded. Run <code>npm run build</code> to regenerate <code>preview/generated/</code>.</li>';
     return;
   }
 
@@ -15,30 +16,36 @@
   const esc = kit.esc;
   const PX_PER_MM = 96 / 25.4;
   const SIZES = { s: 1.0, m: 1.3, l: 1.65 };
+  const BASE_TITLE = document.title;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const gates = kit.gates;
   const gateMap = Object.fromEntries(gates.map((g) => [g.gate, g]));
   const cards = data.cards;
   const questions = cards.filter((c) => c.card_type === "question");
   const answerOf = Object.fromEntries(cards.filter((c) => c.card_type === "answer").map((c) => [c.id, c]));
-  const state = { gate: "all", show: "all", size: "m", guides: false };
+  const state = { gate: null, show: "all", size: "m", guides: false };
+  let fitted = false;
 
-  /* ---------- Departures board (gate filter) ---------- */
   const perGate = (g) => ({ q: cards.filter((c) => c.gate === g && c.card_type === "question").length, a: cards.filter((c) => c.gate === g && c.card_type === "answer").length });
-  const boardRows = [{ gate: "all", dest: "All gates", fr: "Toutes les portes", cardsTxt: `${cards.length} cards` }]
-    .concat(gates.map((g) => {
-      const n = perGate(g.gate);
-      return { gate: g.gate, dest: g.short_en, fr: g.short_fr, cardsTxt: n.a ? `${n.q} Q · ${n.a} A` : `${n.q} Q · no answers` };
-    }));
-  $("#board").innerHTML = boardRows.map((r) => `<button type="button" class="board-row${r.gate === "all" ? "" : " gate-" + r.gate}" data-gate="${r.gate}" aria-pressed="false">
-      <span class="b-gate${r.gate === "all" ? " all" : ""}">${r.gate === "all" ? "ALL" : r.gate}</span>
-      <span class="b-dest"><b>${esc(r.dest)}</b><i lang="fr">${esc(r.fr)}</i></span>
-      <span class="b-cards">${r.cardsTxt}</span>
-      <span class="b-status">${r.gate === "all" ? "Open" : "Open"}</span>
-    </button>`).join("");
+  const countTxt = (g) => { const n = perGate(g); return n.a ? `${n.q + n.a} cards · ${n.q} questions + ${n.a} answers` : `${n.q} discussion cards · no answers`; };
 
   const nQ = questions.length, nA = cards.length - nQ;
-  $("#lede").textContent = `Every card in the deck, exactly as it will be printed: ${nQ} question cards and ${nA} answer cards (${cards.length} cards in all). Cards start face down, the way players see them. Click a card to turn it over.`;
+  $("#lede").textContent = `The whole deck, exactly as it will be printed: ${nQ} question cards and ${nA} answer cards (${cards.length} in all), sorted into ${gates.length} gates. Choose a gate to see its cards. They start face down, the way players see them: click a card to turn it over.`;
+
+  /* ---------- First page: the five gates ---------- */
+  // The back artwork is decorative here (the link text names the gate), so it is hidden from screen readers.
+  $("#gates").innerHTML = gates.map((g) => `<li><a class="gate-tile gate-${g.gate}" href="#gate=${g.gate}">
+      <span class="tile-art" aria-hidden="true">${kit.renderBack(g.gate)}</span>
+      <span class="tile-info">
+        <span class="tile-gate">Gate ${g.gate}</span>
+        <b class="tile-name">${esc(g.short_en)}</b>
+        <i class="tile-fr" lang="fr">${esc(g.short_fr)}</i>
+        <span class="tile-count">${countTxt(g.gate)}</span>
+        <span class="tile-cta">See the cards<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </span>
+    </a></li>`).join("");
+
+  $("#gate-tabs").innerHTML = gates.map((g) => `<li><a class="gate-tab gate-${g.gate}" href="#gate=${g.gate}" aria-label="Gate ${g.gate}: ${esc(g.short_en)}" title="Gate ${g.gate}: ${esc(g.short_en)}">${g.gate}</a></li>`).join("");
 
   /* ---------- Cards ---------- */
   const face = (cls, html, hidden) => `<div class="face ${cls}"${hidden ? ' aria-hidden="true"' : ""}><div class="scaler">${html}</div><div class="guides" aria-hidden="true"><i class="trim"></i><i class="safe"></i></div></div>`;
@@ -58,15 +65,25 @@
     </figure>`;
   }
 
-  $("#gallery").innerHTML = gates.map((g) => {
-    const qs = questions.filter((c) => c.gate === g.gate);
+  // Heading of the open gate, with a legend showing how to tell the two piles apart face down
+  // (answer backs are drawn on a lighter field, see preview.css). Kept outside #gallery, which holds only the 180 cards.
+  const mini = (gate, answer) => `<figure class="legend-item${answer ? " is-answer" : ""}"><div class="face" aria-hidden="true"><div class="scaler">${kit.renderBack(gate)}</div></div>
+      <figcaption><b>${answer ? "Answer card" : "Question card"}</b><span>${answer ? "Lighter back" : "Full-colour back"}</span><i lang="fr">${answer ? "Carte réponse : dos plus clair" : "Carte question : dos en couleur"}</i></figcaption></figure>`;
+  function gateHeadHtml(g) {
     const n = perGate(g.gate);
     const note = n.a
-      ? `${n.q} question cards, each next to its answer card (same ID). All ${n.q + n.a} cards share the Gate ${g.gate} back.`
+      ? `${n.q} question cards, each next to its answer card (same ID): ${n.q + n.a} cards in all.`
       : `${n.q} open-ended discussion cards. No answer cards by design: students share their own experiences.`;
-    return `<section class="gate-sec gate-${g.gate}" id="gate-${g.gate}" data-gate="${g.gate}" aria-labelledby="gate-${g.gate}-title">
-      <div class="gate-title"><span class="letter" aria-hidden="true">${g.gate}</span><h2 id="gate-${g.gate}-title">Gate ${g.gate} — ${esc(g.name_en)}<small lang="fr">${esc(g.name_fr)}</small></h2></div>
-      <p class="gate-note">${note}</p>
+    return `<div class="gate-head-text gate-${g.gate}">
+        <div class="gate-title"><span class="letter" aria-hidden="true">${g.gate}</span><h2 id="gate-title" tabindex="-1">Gate ${g.gate} — ${esc(g.name_en)}<small lang="fr">${esc(g.name_fr)}</small></h2></div>
+        <p class="gate-note">${note}</p>
+      </div>
+      ${n.a ? `<div class="legend" role="group" aria-label="How to tell the cards apart face down">${mini(g.gate, false)}${mini(g.gate, true)}</div>` : ""}`;
+  }
+
+  $("#gallery").innerHTML = gates.map((g) => {
+    const qs = questions.filter((c) => c.gate === g.gate);
+    return `<section class="gate-sec gate-${g.gate}" id="gate-${g.gate}" data-gate="${g.gate}" aria-label="Gate ${g.gate} cards">
       <p class="empty-note" hidden>Gate ${g.gate} has no answer cards: its cards are open discussion prompts. Choose “Questions” or “All cards” to see them.</p>
       <div class="grid">${qs.map((q) => {
         const a = answerOf[q.id];
@@ -76,8 +93,7 @@
     </section>`;
   }).join("");
 
-  $("#backs-row").innerHTML = gates.map((g) => `<figure><div class="face">${`<div class="scaler">${kit.renderBack(g.gate)}</div>`}</div><figcaption>Gate ${g.gate}</figcaption></figure>`).join("");
-  $("#foot").innerHTML = `Drawn from <code>data/cards.json</code> with the same card templates, fonts, colours and back artwork as the print PDFs (finished size ${kit.geometry.trimW} × ${kit.geometry.trimH} mm, ${kit.geometry.bleed} mm bleed). Built ${esc(new Date(kit.built).toLocaleString())}.`;
+  $("#foot").innerHTML = `Drawn from <code>data/cards.json</code> with the same card templates, fonts, colours and back artwork as the print PDFs (finished size ${kit.geometry.trimW} × ${kit.geometry.trimH} mm, ${kit.geometry.bleed} mm bleed). On this page, answer cards are shown with a lighter back so they are easy to tell from question cards; the print PDFs use one back per gate. Built ${esc(new Date(kit.built).toLocaleString())}.`;
 
   const slots = $$(".slot", $("#gallery"));
 
@@ -116,32 +132,27 @@
   });
   $("#gallery").addEventListener("animationend", (e) => { if (e.target.classList.contains("lift")) e.target.classList.remove("lift"); });
 
-  /** Flip many cards: on-screen ones animate in a short cascade, the rest switch instantly. */
+  /** Flip every card of the open gate: on-screen ones animate in a short cascade, the rest switch instantly. */
   function setAll(front) {
-    const visible = slots.filter((s) => !s.hidden && !s.closest("[hidden]"));
+    const mine = slots.filter((s) => s.dataset.gate === state.gate);
     let i = 0;
-    slots.forEach((s) => {
+    mine.forEach((s) => {
       if ((s.dataset.face === "front") === front) return;
-      const animate = visible.includes(s) && onScreen.has(s) && !reduceMotion.matches;
+      const animate = !s.hidden && onScreen.has(s) && !reduceMotion.matches;
       if (animate) { const d = Math.min(i++ * 35, 700); setTimeout(() => setFace(s, front, true), d); }
       else setFace(s, front, false);
     });
-    announce(front ? "All cards flipped to their fronts." : "All cards reset to their backs.");
+    announce(front ? `All Gate ${state.gate} cards flipped to their fronts.` : `All Gate ${state.gate} cards reset to their backs.`);
   }
   $("#flip-all").addEventListener("click", () => setAll(true));
   $("#reset").addEventListener("click", () => setAll(false));
 
   /* ---------- Filters, size, guides ---------- */
   function applyFilters() {
-    $$(".board-row").forEach((b) => {
-      const on = b.dataset.gate === state.gate;
-      b.setAttribute("aria-pressed", String(on));
-      b.querySelector(".b-status").textContent = on ? "Boarding" : "Open";
-    });
     $$("[data-show]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.show === state.show)));
     let shown = 0;
     $$(".gate-sec").forEach((sec) => {
-      const gateOn = state.gate === "all" || sec.dataset.gate === state.gate;
+      const gateOn = sec.dataset.gate === state.gate;
       sec.hidden = !gateOn;
       let inSec = 0;
       $$(".slot", sec).forEach((s) => { s.hidden = state.show !== "all" && s.dataset.type !== state.show; if (!s.hidden) inSec++; });
@@ -150,11 +161,9 @@
       if (gateOn) shown += inSec;
     });
     $("#count").textContent = `${shown} card${shown === 1 ? "" : "s"} shown`;
-    const params = new URLSearchParams();
-    if (state.gate !== "all") params.set("gate", state.gate);
+    const params = new URLSearchParams({ gate: state.gate });
     if (state.show !== "all") params.set("show", state.show);
-    const hash = params.toString();
-    history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+    history.replaceState(null, "", "#" + params.toString());
   }
 
   function applySize() {
@@ -168,31 +177,59 @@
     document.body.classList.toggle("show-guides", state.guides);
   }
 
-  $("#board").addEventListener("click", (e) => {
-    const b = e.target.closest(".board-row");
-    if (!b) return;
-    state.gate = b.dataset.gate;
-    applyFilters();
-    const target = state.gate === "all" ? $("#gallery") : $("#gate-" + state.gate);
-    if (target && $("#toolbar").getBoundingClientRect().top > 0) target.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
-  });
   $$("[data-show]").forEach((b) => b.addEventListener("click", () => { state.show = b.dataset.show; applyFilters(); }));
   $$("[data-size]").forEach((b) => b.addEventListener("click", () => { state.size = b.dataset.size; applySize(); try { localStorage.setItem("airport-preview-size", state.size); } catch (e) { /* storage unavailable */ } }));
   $("#guides").addEventListener("change", (e) => { state.guides = e.target.checked; applySize(); });
   let rt;
   window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(applySize, 120); });
-
-  // Restore gate/show from the link (#gate=B&show=answer) and the remembered size.
-  const params = new URLSearchParams(location.hash.slice(1));
-  if (gateMap[params.get("gate")]) state.gate = params.get("gate");
-  if (["question", "answer"].includes(params.get("show"))) state.show = params.get("show");
   try { const sz = localStorage.getItem("airport-preview-size"); if (SIZES[sz]) state.size = sz; } catch (e) { /* storage unavailable */ }
 
-  // Fit the card text (same algorithm as the PDFs) while everything is laid out, then apply filters.
+  /* ---------- Views: the five gates (no hash) or one gate (#gate=B, optionally &show=answer) ---------- */
+  const isRoute = (hash) => hash === "" || hash === "#" || /(^#|&)gate=/.test(hash);
+
+  function render(navigated) {
+    const params = new URLSearchParams(location.hash.slice(1));
+    const gate = gateMap[params.get("gate")] ? params.get("gate") : null;
+    state.gate = gate;
+    state.show = ["question", "answer"].includes(params.get("show")) ? params.get("show") : "all";
+    const home = !gate;
+    document.body.dataset.view = home ? "home" : "gate";
+    $("#masthead").hidden = !home;
+    $("#picker").hidden = !home;
+    $("#gatebar").hidden = home;
+    $("#toolbar").hidden = home;
+    $("#gate-view").hidden = home;
+    document.title = home ? BASE_TITLE : `Gate ${gate} · ${BASE_TITLE}`;
+    $$(".gate-tab").forEach((a) => { if (a.classList.contains("gate-" + gate)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+
+    if (!home) {
+      $("#gate-head").innerHTML = gateHeadHtml(gateMap[gate]);
+      const i = gates.findIndex((g) => g.gate === gate);
+      const link = (g, dir) => g ? `<a class="pager-${dir}" href="#gate=${g.gate}">${dir === "prev" ? '<span aria-hidden="true">←</span> ' : ""}<b>Gate ${g.gate}</b> <span>${esc(g.short_en)}</span>${dir === "next" ? ' <span aria-hidden="true">→</span>' : ""}</a>` : "<span></span>";
+      $("#pager").innerHTML = `${link(gates[i - 1], "prev")}<a class="pager-home" href="#">All gates</a>${link(gates[i + 1], "next")}`;
+      if (fitted) { applySize(); applyFilters(); }
+    }
+
+    if (navigated) {
+      window.scrollTo(0, 0);
+      const heading = home ? $("#picker-title") : $("#gate-title");
+      heading.focus({ preventScroll: true });
+      announce(home ? "Showing all five gates." : `Gate ${gate}: ${countTxt(gate)}.`);
+    }
+  }
+  window.addEventListener("hashchange", () => { if (isRoute(location.hash)) render(true); });
+
+  // The skip link moves focus without changing the hash (the hash holds the open gate).
+  $(".skip").addEventListener("click", (e) => { e.preventDefault(); $("#main").focus(); $("#main").scrollIntoView(); });
+
+  render(false);
+  // Fit the card text (same algorithm as the PDFs) while the whole deck is laid out off-screen, then show the open gate.
   applySize();
   window.CardFit.ready().then(() => {
     window.CardFit.fitAll($("#gallery"));
-    applyFilters();
+    fitted = true;
+    $("#gate-view").classList.remove("measuring");
+    if (state.gate) { applySize(); applyFilters(); }
     document.documentElement.dataset.previewReady = "1";
   });
 })();

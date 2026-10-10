@@ -1,5 +1,6 @@
 // Automated browser tests for the two static web pages (headless Chrome/Edge):
-//   preview/preview_gallery.html — flip interaction, keyboard, reduced motion, filters, sizes, mobile
+//   preview/preview_gallery.html — five-gate first page, one gate per view, lighter answer backs,
+//                                  flip interaction, keyboard, reduced motion, filters, sizes, mobile
 //   editor/index.html            — editing, live checks, browser drafts, real downloads (JSON/CSV/change list),
 //                                  import (valid + rejected files), filters, mobile overlay,
 //                                  and agreement with scripts/validate.mjs on exported files
@@ -37,8 +38,9 @@ async function newPage(ctx, viewport, opts = {}) {
   const G = "preview";
   const ctx = await browser.createBrowserContext();
   const page = await newPage(ctx, { width: 1366, height: 900 });
+  const ready = () => page.waitForFunction(() => document.documentElement.dataset.previewReady === "1", { timeout: 60000 });
   await page.goto(url("preview/preview_gallery.html"), { waitUntil: "load" });
-  await page.waitForFunction(() => document.documentElement.dataset.previewReady === "1", { timeout: 60000 });
+  await ready();
   await page.screenshot({ path: join(SHOTS, "preview-desktop.png") });
 
   const counts = await page.evaluate(() => {
@@ -52,23 +54,64 @@ async function newPage(ctx, viewport, opts = {}) {
   const badDl = dls.filter((d) => !d.download || !existsSync(fileURLToPath(d.href)));
   t(G, "Download links: all 4 PDFs (home A4, print shop, A3 cut sheets, print specifications) exist", dls.length === 4 && badDl.length === 0, badDl.map((d) => d.href).join(", ") || `${dls.length} links`);
 
+  // First page: the five gates, no cards.
+  const visible = () => page.evaluate(() => [...document.querySelectorAll("#gallery .slot")].filter((s) => s.offsetParent !== null).map((s) => s.dataset.gate + s.dataset.type[0]));
+  const home = await page.evaluate(() => ({
+    h1: document.querySelector("h1").firstChild.textContent.trim(),
+    tiles: [...document.querySelectorAll("#gates .gate-tile")].map((a) => ({ href: a.getAttribute("href"), back: a.querySelector(".card.back")?.dataset.back, count: a.querySelector(".tile-count").textContent })),
+    toolbar: document.getElementById("toolbar").offsetParent !== null,
+  }));
+  const shownHome = (await visible()).length;
+  t(G, "Title reads “FGES Airport Gates”", home.h1 === "FGES Airport Gates", home.h1);
+  t(G, "First page shows the five gates (each with its own back) and no cards", home.tiles.length === 5 && home.tiles.every((x, i) => x.href === `#gate=${"ABCDE"[i]}` && x.back === "ABCDE"[i]) && shownHome === 0 && !home.toolbar, `${home.tiles.length} gates, ${shownHome} cards shown`);
+  t(G, "Each gate states its card count (A–D: 40 cards, E: 20 discussion cards)", home.tiles.slice(0, 4).every((x) => /^40 cards/.test(x.count)) && /^20 discussion cards/.test(home.tiles[4].count), home.tiles.map((x) => x.count).join(" | "));
+
+  // Open Gate A from the first page.
+  await page.click('.gate-tile[href="#gate=A"]');
+  await sleep(300);
+  const vA = await visible();
+  const openA = await page.evaluate(() => ({ hash: location.hash, masthead: document.getElementById("masthead").offsetParent !== null, focus: document.activeElement.id, title: document.getElementById("gate-title").textContent }));
+  t(G, "Clicking a gate shows only that gate's 40 cards (20 questions + 20 answers)", vA.length === 40 && vA.every((x) => x[0] === "A") && vA.filter((x) => x === "Aq").length === 20 && openA.hash === "#gate=A" && !openA.masthead, `${vA.length} cards, ${openA.hash}`);
+  t(G, "The open gate's heading takes focus (screen readers hear which gate opened)", openA.focus === "gate-title" && /^Gate A/.test(openA.title), openA.title);
+  await page.screenshot({ path: join(SHOTS, "preview-gate.png") });
+
   const init = await page.evaluate(() => {
     const s = [...document.querySelectorAll("#gallery .slot")];
+    const shown = s.filter((x) => x.offsetParent !== null);
     const m11 = (el) => new DOMMatrix(getComputedStyle(el).transform === "none" ? undefined : getComputedStyle(el).transform).m11;
     return {
       allBack: s.every((x) => x.dataset.face === "back" && x.querySelector(".flip-hit").getAttribute("aria-pressed") === "false"),
       frontsHidden: s.every((x) => x.querySelector(".face-front").getAttribute("aria-hidden") === "true"),
-      notRotated: s.every((x) => Math.abs(m11(x.querySelector(".flip-inner")) - 1) < 1e-6),
+      notRotated: shown.every((x) => Math.abs(m11(x.querySelector(".flip-inner")) - 1) < 1e-6),
       ownBack: s.every((x) => x.querySelector(".face-back .card.back").dataset.back === x.dataset.gate),
-      backFacesVisible: s.every((x) => getComputedStyle(x.querySelector(".face-front")).backfaceVisibility === "hidden"),
+      backFacesVisible: shown.every((x) => getComputedStyle(x.querySelector(".face-front")).backfaceVisibility === "hidden"),
       hint: /Click a card to flip it/.test(document.getElementById("hint").textContent),
       fit: window.__fitReport.cards.filter((c) => c.overflow).length,
+      fitted: window.__fitReport.cards.length,
     };
   });
   t(G, "Every card starts face down (back facing the viewer), fronts hidden from screen readers", init.allBack && init.frontsHidden && init.notRotated && init.backFacesVisible, JSON.stringify(init));
   t(G, "Every card shows its own gate's back design", init.ownBack);
   t(G, "Hint “Click a card to flip it” is shown", init.hint);
-  t(G, "All card text fits (same fitting as the PDFs)", init.fit === 0, `${init.fit} overflowing`);
+  t(G, "All card text fits (same fitting as the PDFs, all 180 cards)", init.fit === 0 && init.fitted === 180, `${init.fit} overflowing of ${init.fitted}`);
+
+  // Answer backs: same artwork on a lighter field of the same gate colour; question backs and the back text unchanged.
+  const shades = await page.evaluate(() => {
+    const ctx2d = document.createElement("canvas").getContext("2d");
+    const rgb = (c) => { ctx2d.clearRect(0, 0, 1, 1); ctx2d.fillStyle = c; ctx2d.fillRect(0, 0, 1, 1); return [...ctx2d.getImageData(0, 0, 1, 1).data].slice(0, 3); };
+    const lum = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    const root = getComputedStyle(document.documentElement);
+    return ["A", "B", "C", "D"].map((g) => {
+      const back = (type) => document.querySelector(`#gallery .slot[data-gate="${g}"][data-type="${type}"] .face-back svg`);
+      const q = rgb(getComputedStyle(back("question").querySelector("rect")).fill), a = rgb(getComputedStyle(back("answer").querySelector("rect")).fill);
+      const token = rgb(root.getPropertyValue(`--gate-${g}-field`).trim());
+      const inkQ = getComputedStyle(back("question").querySelector("text")).fill, inkA = getComputedStyle(back("answer").querySelector("text")).fill;
+      return { g, qIsToken: q.join() === token.join(), lighter: lum(a) - lum(q), sameInk: inkQ === inkA };
+    });
+  });
+  t(G, "Answer backs are lighter than question backs (A–D); question backs keep the gate colour, back text keeps its colour", shades.every((x) => x.qIsToken && x.lighter > 25 && x.sameInk), shades.map((x) => `${x.g} +${x.lighter.toFixed(0)}${x.qIsToken ? "" : " (question back changed!)"}${x.sameInk ? "" : " (ink changed!)"}`).join(", "));
+  const legend = await page.evaluate(() => [...document.querySelectorAll("#gate-head .legend-item b")].map((b) => b.textContent));
+  t(G, "Legend explains question vs answer backs", legend.join("|") === "Question card|Answer card", legend.join("|"));
 
   const sel = (id, type) => `#gallery .slot[data-id="${id}"][data-type="${type}"]`;
   const state = (id, type) => page.evaluate((s) => { const el = document.querySelector(s); const m = new DOMMatrix(getComputedStyle(el.querySelector(".flip-inner")).transform); return { face: el.dataset.face, pressed: el.querySelector(".flip-hit").getAttribute("aria-pressed"), m11: +m.m11.toFixed(3), frontHidden: el.querySelector(".face-front").getAttribute("aria-hidden"), cap: el.querySelector(".cap .side").textContent }; }, sel(id, type));
@@ -76,7 +119,6 @@ async function newPage(ctx, viewport, opts = {}) {
   await page.click(`${sel("A1", "question")} .flip-hit`);
   await sleep(260);
   const mid = await state("A1", "question");
-  await page.evaluate(() => document.querySelector("#gate-A").scrollIntoView());
   await page.screenshot({ path: join(SHOTS, "preview-mid-flip.png") });
   await sleep(800);
   const s1 = await state("A1", "question");
@@ -88,46 +130,57 @@ async function newPage(ctx, viewport, opts = {}) {
   t(G, "Clicking again flips it back to the gate back", s2.face === "back" && s2.pressed === "false" && s2.m11 === 1, JSON.stringify(s2));
 
   // Keyboard
-  await page.focus(`${sel("B3", "answer")} .flip-hit`);
+  await page.focus(`${sel("A3", "answer")} .flip-hit`);
   const focusable = await page.evaluate(() => document.activeElement.classList.contains("flip-hit") && document.activeElement.tagName === "BUTTON");
   await page.keyboard.press("Enter");
   await sleep(900);
-  const k1 = await state("B3", "answer");
+  const k1 = await state("A3", "answer");
   await page.keyboard.press("Space");
   await sleep(900);
-  const k2 = await state("B3", "answer");
+  const k2 = await state("A3", "answer");
   t(G, "Keyboard: cards are focusable buttons; Enter flips to the front, Space flips back", focusable && k1.face === "front" && k2.face === "back", `${k1.face} → ${k2.face}`);
   const tabbed = await page.evaluate(() => { document.querySelector("#reset").focus(); return true; }) && (await (async () => { for (let i = 0; i < 6; i++) { await page.keyboard.press("Tab"); const c = await page.evaluate(() => document.activeElement.className); if (c.includes("flip-hit")) return true; } return false; })());
   t(G, "Keyboard: Tab from the toolbar reaches the cards", tabbed);
   const ring = await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return s.outlineStyle !== "none" && parseFloat(s.outlineWidth) >= 2; });
   t(G, "Keyboard focus is visible on the card", ring);
 
-  // Flip all / reset
+  // Flip all / reset act on the open gate only
   await page.click("#flip-all");
   await sleep(1700);
-  const allFront = await page.evaluate(() => [...document.querySelectorAll("#gallery .slot")].every((s) => s.dataset.face === "front"));
+  const flipped = await page.evaluate(() => { const s = [...document.querySelectorAll("#gallery .slot")]; return { gate: s.filter((x) => x.dataset.gate === "A").every((x) => x.dataset.face === "front"), others: s.filter((x) => x.dataset.gate !== "A").every((x) => x.dataset.face === "back") }; });
   await page.click("#reset");
   await sleep(1700);
   const allBack = await page.evaluate(() => [...document.querySelectorAll("#gallery .slot")].every((s) => s.dataset.face === "back" && s.querySelector(".flip-hit").getAttribute("aria-pressed") === "false"));
-  t(G, "“Flip all to fronts” then “Reset all to backs” returns every card to its back", allFront && allBack, `all front ${allFront}, all back ${allBack}`);
+  t(G, "“Flip all to fronts” turns the open gate's cards only; “Reset all to backs” returns them to their backs", flipped.gate && flipped.others && allBack, `gate front ${flipped.gate}, other gates untouched ${flipped.others}, all back ${allBack}`);
 
-  // Filters
-  const visible = () => page.evaluate(() => [...document.querySelectorAll("#gallery .slot")].filter((s) => s.offsetParent !== null).map((s) => s.dataset.gate + s.dataset.type[0]));
-  await page.click('.board-row[data-gate="B"]');
+  // Switching gates, type filter, links, back button
+  await page.click('.gate-tab[href="#gate=B"]');
+  await sleep(200);
   const vB = await visible();
+  const tabCurrent = await page.evaluate(() => document.querySelector(".gate-tab[aria-current='page']")?.textContent);
   await page.click('[data-show="answer"]');
   const vBA = await visible();
   const hash = await page.evaluate(() => location.hash);
-  await page.click('.board-row[data-gate="E"]');
+  await page.click('.gate-tab[href="#gate=E"]');
+  await sleep(200);
+  await page.click('[data-show="answer"]');
   const vEA = await visible();
   const emptyNote = await page.evaluate(() => !document.querySelector("#gate-E .empty-note").hidden);
-  t(G, "Gate filter (departures board) shows only that gate", vB.length === 40 && vB.every((x) => x[0] === "B"), `${vB.length} cards`);
+  t(G, "Gate switcher opens another gate (only its cards) and marks it as current", vB.length === 40 && vB.every((x) => x[0] === "B") && tabCurrent === "B", `${vB.length} cards, current ${tabCurrent}`);
   t(G, "Type filter: answers only", vBA.length === 20 && vBA.every((x) => x === "Ba"), `${vBA.length} cards`);
   t(G, "Gate E with “Answers” shows no cards and explains why", vEA.length === 0 && emptyNote);
   t(G, "Filter state is kept in the link (#gate=…&show=…)", hash === "#gate=B&show=answer", hash);
+  await page.goBack();
+  await sleep(200);
+  const back = await page.evaluate(() => location.hash);
+  await page.click(".home-link");
+  await sleep(200);
+  const home2 = await page.evaluate(() => ({ view: document.body.dataset.view, gates: document.getElementById("picker").offsetParent !== null }));
+  const shownHome2 = (await visible()).length;
+  t(G, "Browser Back returns to the previous gate; “All gates” returns to the five gates", /^#gate=B/.test(back) && home2.view === "home" && home2.gates && shownHome2 === 0, `back → ${back}, then ${home2.view} (${shownHome2} cards shown)`);
   await page.goto("about:blank");
   await page.goto(url("preview/preview_gallery.html") + "#gate=D&show=question", { waitUntil: "load" });
-  await page.waitForFunction(() => document.documentElement.dataset.previewReady === "1");
+  await ready();
   const vD = await visible();
   t(G, "Opening a link with #gate=D&show=question restores that view", vD.length === 20 && vD.every((x) => x === "Dq"), `${vD.length} cards`);
 
@@ -149,7 +202,7 @@ async function newPage(ctx, viewport, opts = {}) {
 
   // Reduced motion
   const rm = await newPage(ctx, { width: 1366, height: 900 }, { reduceMotion: true });
-  await rm.goto(url("preview/preview_gallery.html"), { waitUntil: "load" });
+  await rm.goto(url("preview/preview_gallery.html") + "#gate=C", { waitUntil: "load" });
   await rm.waitForFunction(() => document.documentElement.dataset.previewReady === "1");
   const before = await rm.evaluate(() => getComputedStyle(document.querySelector("#gallery .flip-inner")).transitionDuration);
   await rm.click('#gallery .slot[data-id="C2"][data-type="question"] .flip-hit');
@@ -162,10 +215,16 @@ async function newPage(ctx, viewport, opts = {}) {
   const mob = await newPage(ctx, { width: 375, height: 812, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   await mob.goto(url("preview/preview_gallery.html"), { waitUntil: "load" });
   await mob.waitForFunction(() => document.documentElement.dataset.previewReady === "1");
+  const mh = await mob.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: innerWidth, fitting: [...document.querySelectorAll("#gates .gate-tile")].filter((a) => a.getBoundingClientRect().right <= innerWidth).length }));
+  t(G, "Mobile (375 px): the five gates fit the screen width, no horizontal scrolling", mh.scroll <= mh.inner && mh.fitting === 5, `page ${mh.scroll}px, ${mh.fitting} gates fit`);
+  await mob.screenshot({ path: join(SHOTS, "preview-mobile-gates.png"), fullPage: true });
+  await mob.tap('.gate-tile[href="#gate=A"]');
+  await sleep(300);
   const mi = await mob.evaluate(() => {
     const s = +getComputedStyle(document.getElementById("gallery")).getPropertyValue("--s");
     const minPt = Math.min(...window.__fitReport.cards.flatMap((c) => [c.en_pt, c.fr_pt]));
-    return { scroll: document.documentElement.scrollWidth, inner: innerWidth, cardW: document.querySelector("#gallery .flip").getBoundingClientRect().width, s, minPx: minPt * s * 96 / 72 };
+    const card = [...document.querySelectorAll("#gallery .slot")].find((x) => x.offsetParent !== null);
+    return { scroll: document.documentElement.scrollWidth, inner: innerWidth, cardW: card.querySelector(".flip").getBoundingClientRect().width, s, minPx: minPt * s * 96 / 72 };
   });
   t(G, "Mobile (375 px): no horizontal scrolling and cards fit the screen", mi.scroll <= mi.inner && mi.cardW <= mi.inner - 32, `page ${mi.scroll}px, card ${mi.cardW.toFixed(0)}px`);
   t(G, "Mobile: smallest card text is still at least 11 px on screen", mi.minPx >= 11, `${mi.minPx.toFixed(1)} px (scale ${mi.s})`);

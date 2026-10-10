@@ -22,7 +22,7 @@ const deliverables = [
   ["data/cards.json", "Structured records for all 180 cards (source of truth)"],
   ["data/cards.csv", "Flat export (UTF-8 with BOM, opens in Excel)"],
   ["data/partners.json", "Partner universities → resolved city/country + verification status"],
-  ["preview/preview_gallery.html", "Animated design preview: every card face down, click to flip; the five backs"],
+  ["preview/preview_gallery.html", "Animated design preview: the five gates; each gate's cards face down (lighter answer backs), click to flip"],
   ["editor/index.html", "Question editor for colleagues (browser only, exports JSON/CSV)"],
   ["assets/backs/back_gate_A_food_language_traditions.svg", "Back — Gate A"],
   ["assets/backs/back_gate_B_campus_city.svg", "Back — Gate B"],

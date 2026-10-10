@@ -14,7 +14,7 @@ A bilingual (English / French) question-card game for the university Internation
 
 **For colleagues (no software needed, just a browser):**
 
-- **See the cards:** open [`preview/preview_gallery.html`](preview/preview_gallery.html). Every card starts face down; click one to flip it.
+- **See the cards:** open [`preview/preview_gallery.html`](preview/preview_gallery.html). Choose one of the five gates to see its cards. Every card starts face down; click one to flip it.
 - **Edit the questions:** open [`editor/index.html`](editor/index.html), make your changes, then click **Export JSON** and send the file to the coordinator. See [Editing the cards in the browser](#editing-the-cards-in-the-browser-for-colleagues).
 - **Send to the print department:** `exports/cards_print_shop.pdf` and `exports/print_specifications.pdf`. See [Printing](#printing).
 - **Print cheaply and cut by hand:** `exports/cards_manual_cut_A3.pdf`, card fronts only on 10 A3 sheets. **Print at 100 % / Actual size and check the size with a ruler first.** See [A3 sheets to cut by hand](#a3-sheets-to-cut-by-hand-fronts-only).
@@ -26,7 +26,7 @@ exports/cards_print_shop.pdf      ← for the print department (1 card side per 
 exports/cards_home_print_A4.pdf   ← print at home/office (A4, two-sided, with guide + alignment test)
 exports/cards_manual_cut_A3.pdf   ← low-cost: card fronts only, 18 per A3 sheet, print one-sided and cut by hand
 exports/print_specifications.pdf  ← print specification sheet for the print department (also docs/PRINT_SPECIFICATIONS.md)
-preview/preview_gallery.html      ← animated design preview: cards face down, click to flip; download buttons for the 4 PDFs
+preview/preview_gallery.html      ← animated design preview: the five gates, then one gate's cards face down, click to flip; download buttons for the 4 PDFs
 editor/index.html                 ← question editor for colleagues (runs in the browser, exports JSON/CSV)
 QC_REPORT.md                      ← counts, automated checks, sources, open issues
 cards_source.zip                  ← everything below + PDFs, ready to hand over
@@ -164,10 +164,12 @@ To preview a few cards quickly: `node scripts/prototype.mjs B7 B7:answer E3`. Th
 `preview/preview_gallery.html` is for showing colleagues how the finished cards look. It is a review page; it does not edit anything.
 
 - Every card starts **face down**, showing its gate's real back design. **Click a card to flip it** (a 3D turn). Click again to turn it back. Keyboard users press Tab to reach a card, then Enter or Space.
-- The **departures board** at the top filters by gate. **Show** switches between all cards, questions and answers (Gate E has questions only). **Card size** sets S/M/L. **Flip all to fronts** and **Reset all to backs** turn every card. **Print guides** shows the bleed, trim line and safe area.
-- The current gate/filter is kept in the address (e.g. `…/preview_gallery.html#gate=B&show=answer`), so you can send a link to one gate.
+- The **first page** shows the title, the PDF downloads and the **five gates** (each drawn with its back design and its card count). Click a gate to open it: only that gate's cards are shown (Gates A–D: 20 question cards, each next to its answer card, 40 cards in all; Gate E: 20 discussion cards). **All gates** (top left) or the browser's Back button returns to the five gates; the **A–E buttons** (top right) and the links at the bottom switch to another gate.
+- **Answer cards have a lighter back** than question cards (the same artwork on a lighter shade of the gate colour), and a small legend under the gate title shows both. This is on the web page only: the print PDFs keep one back per gate for questions and answers.
+- Inside a gate, **Show** switches between all cards, questions and answers (Gate E has questions only). **Card size** sets S/M/L. **Flip all to fronts** and **Reset all to backs** turn every card of the open gate. **Print guides** shows the bleed, trim line and safe area.
+- The open gate and filter are kept in the address (e.g. `…/preview_gallery.html#gate=B&show=answer`), so you can send a link to one gate.
 - With "reduce motion" switched on in the operating system, cards change sides instantly, without animation.
-- The page uses the same card templates, fonts, colours, back artwork and text-fitting code as the PDFs. The build verifies that all 180 cards render identically.
+- The page uses the same card templates, fonts, colours, back artwork and text-fitting code as the PDFs. The build verifies that all 180 cards render identically (apart from the lighter answer backs described above).
 
 ## Hosting the preview and the editor
 

@@ -98,7 +98,13 @@ const results = {};
 
 // 1. Web preview: confirms it renders identically (same templates via the browser card kit) and fits.
 {
-  const { page, fit, missingFonts, fonts, errors } = await open("preview/preview_gallery.html", () => document.documentElement.dataset.previewReady === "1");
+  // The page shows one gate at a time; once it is ready, lay out the whole deck so the font audit sees every card.
+  const { page, fit, missingFonts, fonts, errors } = await open("preview/preview_gallery.html", () => {
+    if (document.documentElement.dataset.previewReady !== "1") return false;
+    document.getElementById("gate-view").hidden = false;
+    document.querySelectorAll("#gallery .gate-sec").forEach((s) => (s.hidden = false));
+    return true;
+  });
   const info = await page.evaluate(() => {
     const slots = [...document.querySelectorAll("#gallery .slot")];
     return {

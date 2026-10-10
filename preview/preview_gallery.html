@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Airport Gates — Card Preview</title>
-<meta name="description" content="Design preview of the International Fair 'Airport Gates' card game: every card starts face down; click a card to flip it.">
+<title>FGES Airport Gates — Card Preview</title>
+<meta name="description" content="Design preview of the International Fair 'FGES Airport Gates' card game: choose one of the five gates to see its cards. Every card starts face down; click a card to flip it.">
 <!-- Card artwork, fonts and colours come from generated/ (built from the same sources as the print PDFs). -->
 <link rel="stylesheet" href="generated/card-kit.css">
 <link rel="stylesheet" href="preview.css">
@@ -15,16 +15,17 @@
 <script src="preview.js" defer></script>
 <script src="flight.js" defer></script>
 </head>
-<body>
-<a class="skip" href="#gallery">Skip to the cards</a>
+<body data-view="home">
+<a class="skip" href="#main">Skip to the content</a>
 
-<header class="masthead">
+<!-- First page: title, downloads and the five gates. Hidden while a gate is open (#gate=A … #gate=E). -->
+<header class="masthead" id="masthead">
   <div class="wrap">
     <div class="masthead-top">
       <div class="masthead-text">
         <p class="eyebrow">International Fair · Foire internationale — design preview</p>
-        <h1>Airport Gates <span>the deck, face down</span></h1>
-        <p class="lede" id="lede">Every card in the deck, exactly as it will be printed. Cards start face down, the way players see them. Click a card to turn it over.</p>
+        <h1>FGES Airport Gates <span>the deck, face down</span></h1>
+        <p class="lede" id="lede">The whole deck, exactly as it will be printed, sorted into five gates. Choose a gate to see its cards. They start face down, the way players see them: click a card to turn it over.</p>
       </div>
       <!-- Decorative flight: "FGES Air Fair" A350 (French-flag tail) artwork generated with Higgsfield (media/), animated by preview.css + flight.js. -->
       <div class="flight" id="flight" aria-hidden="true">
@@ -65,16 +66,22 @@
         </a></li>
       </ul>
     </section>
-
-    <div class="board" role="group" aria-labelledby="board-title">
-      <div class="board-head" aria-hidden="true"><span>Gate</span><span>Destination</span><span>Cards</span><span>Status</span></div>
-      <p class="sr-only" id="board-title">Choose a gate to show</p>
-      <div id="board"></div>
-    </div>
   </div>
 </header>
 
-<div class="toolbar" id="toolbar">
+<!-- Gate pages: slim bar with the way back to the five gates and a quick switch between them. -->
+<nav class="gatebar" id="gatebar" aria-label="Gates" hidden>
+  <div class="wrap gatebar-inner">
+    <a class="home-link" href="#">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>All gates</b><i lang="fr">Toutes les portes</i></span>
+    </a>
+    <p class="brand" aria-hidden="true">FGES Airport Gates</p>
+    <ul class="gate-tabs" id="gate-tabs"></ul>
+  </div>
+</nav>
+
+<div class="toolbar" id="toolbar" hidden>
   <div class="wrap toolbar-inner">
     <div class="tool">
       <span class="tool-label" id="show-label">Show</span>
@@ -100,19 +107,24 @@
   </div>
 </div>
 
-<main class="wrap" id="main">
-  <p class="hint" id="hint">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 8v12h1M14 4v4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-    <span><b>Click a card to flip it.</b> <span lang="fr">Cliquez sur une carte pour la retourner.</span> <span class="kbd-note">Keyboard: Tab to a card, then press Enter or Space.</span></span>
-    <span class="count" id="count" aria-live="polite"></span>
-  </p>
-  <div id="gallery" class="gallery" aria-live="off"></div>
-
-  <section class="backs" id="backs" aria-labelledby="backs-title">
-    <h2 id="backs-title">The five gate backs <span lang="fr">Les cinq dos</span></h2>
-    <p>One back per gate, shared by every question and answer card of that gate. Same frame, type and layout; each gate changes only its colours, letter and motif.</p>
-    <div class="backs-row" id="backs-row"></div>
+<main class="wrap" id="main" tabindex="-1">
+  <section class="picker" id="picker" aria-labelledby="picker-title">
+    <h2 id="picker-title" tabindex="-1">Choose your gate <span lang="fr">Choisissez votre porte</span></h2>
+    <p>Each gate is its own deck. Click a gate to see only its cards: the question cards and their answer cards.</p>
+    <ul class="gates" id="gates"></ul>
   </section>
+
+  <!-- The deck. Every card is in the page (and text-fitted at load); only the open gate is shown. -->
+  <div class="gate-view measuring" id="gate-view" hidden>
+    <div class="gate-head" id="gate-head"></div>
+    <p class="hint" id="hint">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 8v12h1M14 4v4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <span><b>Click a card to flip it.</b> <span lang="fr">Cliquez sur une carte pour la retourner.</span> <span class="kbd-note">Keyboard: Tab to a card, then press Enter or Space.</span></span>
+      <span class="count" id="count" aria-live="polite"></span>
+    </p>
+    <div id="gallery" class="gallery" aria-live="off"></div>
+    <nav class="pager" id="pager" aria-label="Other gates"></nav>
+  </div>
 
   <footer class="foot" id="foot"></footer>
 </main>
