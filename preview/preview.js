@@ -93,7 +93,7 @@
     </section>`;
   }).join("");
 
-  $("#foot").innerHTML = `Drawn from <code>data/cards.json</code> with the same card templates, fonts, colours and back artwork as the print PDFs (finished size ${kit.geometry.trimW} × ${kit.geometry.trimH} mm, ${kit.geometry.bleed} mm bleed). On this page, answer cards are shown with a lighter back so they are easy to tell from question cards; the print PDFs use one back per gate. Built ${esc(new Date(kit.built).toLocaleString())}.`;
+  $("#foot").innerHTML = `Created by ELSA A.BAKHSHI<br>© 2026 ELSA A.BAKHSHI. All rights reserved. These cards may be printed and used free of charge for non-commercial educational purposes; any other copying, modification, distribution or commercial use requires the author’s written permission.`;
 
   const slots = $$(".slot", $("#gallery"));
 
