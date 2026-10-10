@@ -26,6 +26,106 @@ button { font: inherit; color: inherit; }
 h1 { margin: 6px 0 8px; font-family: var(--font-sign); font-weight: 800; font-size: clamp(38px, 7vw, 68px); line-height: .92; letter-spacing: .005em; text-transform: uppercase; }
 h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .08em; color: var(--c-turquoise); margin-top: 6px; }
 .lede { max-width: 62ch; margin: 0 0 22px; color: rgba(255, 255, 255, .88); }
+.masthead-top { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: 24px; margin-bottom: 22px; }
+.masthead-top .lede { margin-bottom: 0; }
+
+/* Decorative flight ("FGES Air Fair" A350 cruising through parallax clouds) - */
+.flight {
+  --px: 0; --py: 0;        /* pointer position, -1…1, set by flight.js */
+  position: relative; min-height: 210px; overflow: hidden; container-type: inline-size; pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent), linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent), linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  mask-composite: intersect;
+}
+.flight > * { position: absolute; }
+.sky-glow {
+  inset: 0;
+  background:
+    radial-gradient(38% 46% at 58% 50%, rgba(31, 181, 190, .30), transparent 72%),
+    radial-gradient(22% 30% at 76% 34%, rgba(255, 201, 60, .20), transparent 70%);
+  animation: glow 8s ease-in-out infinite;
+}
+@keyframes glow { 50% { opacity: .7; } }
+
+/* Clouds: soft puffs drifting right → left; the near layer passes in front of the plane. */
+.clouds { inset: 0; transition: translate 1.2s cubic-bezier(.2, .7, .2, 1); }
+.clouds i {
+  position: absolute; left: 0; aspect-ratio: 3 / 1;
+  background:
+    radial-gradient(closest-side, var(--cloud) 55%, transparent) 4% 80% / 42% 64% no-repeat,
+    radial-gradient(closest-side, var(--cloud) 55%, transparent) 34% 30% / 46% 96% no-repeat,
+    radial-gradient(closest-side, var(--cloud) 55%, transparent) 66% 48% / 44% 84% no-repeat,
+    radial-gradient(closest-side, var(--cloud) 55%, transparent) 96% 82% / 30% 52% no-repeat;
+  animation: drift var(--dur) linear var(--delay) infinite; will-change: transform;
+}
+@keyframes drift { from { transform: translateX(100cqw); } to { transform: translateX(-100%); } }
+.clouds-far { --cloud: var(--c-turquoise-tint); translate: calc(var(--px) * -6px) calc(var(--py) * -3px); }
+.clouds-far i { filter: blur(1.5px); }
+.clouds-far i:nth-child(1) { top: 6%;  width: 26%; opacity: .22; --dur: 52s; --delay: -8s; }
+.clouds-far i:nth-child(2) { top: 30%; width: 18%; opacity: .16; --dur: 64s; --delay: -30s; }
+.clouds-far i:nth-child(3) { top: 70%; width: 30%; opacity: .20; --dur: 58s; --delay: -44s; }
+.clouds-far i:nth-child(4) { top: 48%; width: 22%; opacity: .14; --dur: 70s; --delay: -18s; }
+.clouds-near { --cloud: #fff; translate: calc(var(--px) * -22px) calc(var(--py) * -8px); }
+.clouds-near i:nth-child(1) { top: 66%; width: 50%; opacity: .42; filter: blur(4px); --dur: 17s; --delay: -3s; }
+.clouds-near i:nth-child(2) { top: -4%; width: 40%; opacity: .26; filter: blur(5px); --dur: 22s; --delay: -13s; }
+.clouds-near i:nth-child(3) { top: 80%; width: 62%; opacity: .34; filter: blur(5px); --dur: 26s; --delay: -20s; }
+
+/* Speed lines streaking past. */
+.streaks { inset: 0; }
+.streaks i { position: absolute; left: 0; height: 1px; width: 22%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent); animation: drift var(--dur) linear var(--delay) infinite; }
+.streaks i:nth-child(1) { top: 24%; --dur: 2.4s; --delay: -.4s; }
+.streaks i:nth-child(2) { top: 41%; width: 30%; --dur: 1.9s; --delay: -1.3s; }
+.streaks i:nth-child(3) { top: 58%; --dur: 2.8s; --delay: -2.1s; }
+.streaks i:nth-child(4) { top: 73%; width: 16%; --dur: 2.1s; --delay: -.9s; }
+.streaks i:nth-child(5) { top: 86%; width: 26%; --dur: 3.2s; --delay: -2.6s; }
+
+/* The aircraft: entrance (rig) → pointer lean (tilt) → cruising float (plane). */
+.plane-rig { left: 50%; top: 50%; width: min(460px, 80cqw); translate: -50% -50%; animation: takeoff 2.6s cubic-bezier(.16, .84, .3, 1) .2s both; }
+@keyframes takeoff {
+  from { transform: translate(-80cqw, 40px) rotate(-7deg) scale(.8); opacity: 0; }
+  15% { opacity: 1; }
+  to { transform: none; opacity: 1; }
+}
+.plane-tilt { transform: translate(calc(var(--px) * 16px), calc(var(--py) * 10px)) rotate(calc(var(--py) * 2deg)); transition: transform .9s cubic-bezier(.2, .7, .2, 1); }
+.plane { position: relative; animation: cruise 9s ease-in-out infinite; }
+@keyframes cruise {
+  25% { transform: translate(6px, -5px) rotate(-.8deg); }
+  50% { transform: translate(0, -9px) rotate(-.3deg); }
+  75% { transform: translate(-6px, -3px) rotate(.5deg); }
+}
+.plane img { position: relative; display: block; width: 100%; height: auto; filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .35)); }
+/* Contrails behind the tail, tapering toward the aircraft. */
+.trail {
+  position: absolute; right: calc(100% - 10%); width: 90cqw; height: 7px; translate: 0 -50%;
+  transform-origin: right center; rotate: -5deg;
+  background: linear-gradient(270deg, rgba(255, 255, 255, .75), rgba(217, 242, 244, .28) 45%, transparent);
+  clip-path: polygon(0 0, 100% 42%, 100% 58%, 0 100%); filter: blur(1px);
+  animation: trail 2.2s ease-in-out infinite;
+}
+.trail:nth-child(1) { top: 75%; }
+.trail:nth-child(2) { top: 85%; animation-delay: -1.1s; }
+@keyframes trail { 50% { opacity: .6; } }
+
+.flight-tag {
+  left: 12%; bottom: 10%; margin: 0; padding: 4px 12px 4px 10px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 999px;
+  background: rgba(11, 37, 69, .6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  font-family: var(--font-sign); font-weight: 700; font-size: 13px; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .78); white-space: nowrap;
+}
+.flight-tag b { color: var(--c-yellow); }
+.flight-tag i { font-family: var(--font-text); font-weight: 400; font-style: italic; letter-spacing: 0; text-transform: none; color: var(--c-turquoise); }
+.flight-tag .dot { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--c-yellow); vertical-align: 1px; animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* Pause every loop while the masthead is scrolled out of view (flight.js). */
+.flight.is-paused * { animation-play-state: paused !important; }
+
+@media (max-width: 960px) {
+  .masthead-top { grid-template-columns: minmax(0, 1fr); }
+  .flight { min-height: 0; height: 180px; margin-top: 8px; }
+  .plane-rig { width: min(380px, 78cqw); }
+}
 
 /* PDF downloads ------------------------------------------------------------ */
 .downloads { margin: 0 0 24px; }
@@ -177,8 +277,11 @@ h1 span { display: block; font-weight: 600; font-size: .42em; letter-spacing: .0
   .hint-inline { display: none; }
 }
 
-/* Reduced motion: cards swap faces instantly, no lift. */
+/* Reduced motion: cards swap faces instantly, no lift; the plane and clouds hold still. */
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }
   .flip.lift { animation: none; }
+  .flight * { animation-play-state: paused !important; }
+  .plane-rig { animation: none; }
+  .streaks { display: none; }
 }

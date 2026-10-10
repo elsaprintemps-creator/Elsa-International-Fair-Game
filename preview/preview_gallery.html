@@ -13,15 +13,36 @@
 <script src="generated/card-kit.js" defer></script>
 <script src="generated/autofit.js" defer></script>
 <script src="preview.js" defer></script>
+<script src="flight.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#gallery">Skip to the cards</a>
 
 <header class="masthead">
   <div class="wrap">
-    <p class="eyebrow">International Fair · Foire internationale — design preview</p>
-    <h1>Airport Gates <span>the deck, face down</span></h1>
-    <p class="lede" id="lede">Every card in the deck, exactly as it will be printed. Cards start face down, the way players see them. Click a card to turn it over.</p>
+    <div class="masthead-top">
+      <div class="masthead-text">
+        <p class="eyebrow">International Fair · Foire internationale — design preview</p>
+        <h1>Airport Gates <span>the deck, face down</span></h1>
+        <p class="lede" id="lede">Every card in the deck, exactly as it will be printed. Cards start face down, the way players see them. Click a card to turn it over.</p>
+      </div>
+      <!-- Decorative flight: "FGES Air Fair" A350 (French-flag tail) artwork generated with Higgsfield (media/), animated by preview.css + flight.js. -->
+      <div class="flight" id="flight" aria-hidden="true">
+        <div class="sky-glow"></div>
+        <div class="clouds clouds-far"><i></i><i></i><i></i><i></i></div>
+        <div class="streaks"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="plane-rig">
+          <div class="plane-tilt">
+            <div class="plane">
+              <i class="trail"></i><i class="trail"></i>
+              <img src="media/fges-air-fair-a350.webp" width="960" height="174" alt="" decoding="async">
+            </div>
+          </div>
+        </div>
+        <div class="clouds clouds-near"><i></i><i></i><i></i></div>
+        <p class="flight-tag"><span class="dot"></span>Paris-CDG <b>→</b> The world <i lang="fr">· le monde</i></p>
+      </div>
+    </div>
 
     <section class="downloads" aria-labelledby="dl-title">
       <h2 id="dl-title">Download the PDFs <span lang="fr">Télécharger les PDF</span></h2>

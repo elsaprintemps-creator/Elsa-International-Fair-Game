@@ -48,6 +48,7 @@ src/rules.mjs                 ← content rules shared by the build and the edit
 src/data-io.mjs               ← JSON/CSV formats shared by the build and the editor's exports
 src/autofit.js                ← in-browser text fitting + overflow checks
 preview/, editor/             ← the two web pages; their generated/ folders are rebuilt by `npm run build`
+preview/media/fges-air-fair-a350.webp ← header plane artwork, "FGES Air Fair" with a French-flag tail (generated with Higgsfield); flown by preview/flight.js + preview.css
 scripts/                      ← validate · build · build-web · render-pdf · check-pdf · print-spec · test-web · import-edits · …
 docs/prototype.png            ← design prototype (Gate A Q+A, a Gate E card, all five backs)
 ```
