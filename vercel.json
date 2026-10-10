@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo 'Static site: nothing to install'",
+  "buildCommand": "echo 'Static site: the pages and PDFs are built locally with npm run build'",
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/", "destination": "/preview/preview_gallery.html", "permanent": false }
+  ]
+}

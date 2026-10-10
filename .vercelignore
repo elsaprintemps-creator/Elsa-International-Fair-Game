@@ -1,0 +1,11 @@
+# Never deployed to Vercel, whether the deployment comes from GitHub or from this computer.
+# Local settings: .env.local and friends stay on this machine only.
+.env
+.env.*
+# Source spreadsheet stays private
+University Partners.xlsx
+# Local build output and packages
+node_modules
+build
+cards_source.zip
+data/backups
