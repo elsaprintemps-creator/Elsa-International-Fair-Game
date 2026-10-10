@@ -1,0 +1,111 @@
+{
+  "_comment": "All print geometry lives here. Change values, then run `npm run build`. Units: millimetres unless noted.",
+  "card": {
+    "size_name": "UNO-style compact playing card",
+    "_size_note": "56 x 87 mm is the size commonly reported for UNO cards by retailers and accessory makers. It is NOT an official Mattel/UNO specification (none was found). Confirm the finished size with the print department; any size works, the card layout is in mm and adapts. Reference sizes: bridge 57.2 x 88.9 mm (2.25 x 3.5 in), poker 63.5 x 88.9 mm (2.5 x 3.5 in).",
+    "trim_width_mm": 56,
+    "trim_height_mm": 87,
+    "bleed_mm": 3,
+    "safe_margin_mm": 3.5,
+    "preview_corner_radius_mm": 3,
+    "_corner_note": "The PDF artwork is square-cornered with bleed; rounded corners are a finishing (die-cut) option at the printer. The radius is only used for the on-screen previews."
+  },
+  "text_fit": {
+    "_comment": "Starting font sizes in pt. Text that does not fit is shrunk automatically, never below min_pt; anything still overflowing is reported as a QC failure.",
+    "question_en_pt": 9.2,
+    "question_fr_pt": 8.6,
+    "answer_en_pt": 12,
+    "answer_fr_pt": 11.2,
+    "discussion_en_pt": 9.8,
+    "discussion_fr_pt": 9.2,
+    "min_pt": 7,
+    "step_pt": 0.2
+  },
+  "color": {
+    "_comment": "The PDFs are rendered by Chrome/Edge, which always writes RGB (DeviceRGB, colour values defined as sRGB hex in design/tokens.css). These fields describe the colour request that goes into the print specification sheet; they do not convert the file. CMYK/PDF-X conversion must be done by the print department's prepress (or a prepress tool) with their profile.",
+    "delivered_color_space": "RGB (sRGB values, DeviceRGB in the PDF)",
+    "requested_output": "Full colour (4/4) both sides",
+    "cmyk_profile": "to be confirmed by the print department (e.g. PSO Coated v3 / FOGRA51 or ISO Coated v2 / FOGRA39 for coated stock)",
+    "registration_marks": "#000000",
+    "proof_required": true
+  },
+  "pdf": {
+    "_comment": "Checks applied to every exported PDF by scripts/check-pdf.mjs.",
+    "require_embedded_fonts": true,
+    "allowed_extra_fonts": [],
+    "_allowed_extra_fonts_note": "Card text must use the two project fonts (Atkinson Hyperlegible, Barlow Condensed). If a card needs characters they lack (e.g. Greek or CJK), Chrome substitutes a system font and the font check fails; list that font family here to accept it knowingly.",
+    "min_image_ppi": 300,
+    "_min_image_ppi_note": "All current artwork is vector (no raster images). Any photo or bitmap added later must reach this effective resolution at its printed size.",
+    "author": "International Fair — Airport Gates card game",
+    "add_bookmarks": true
+  },
+  "home_print": {
+    "output": "exports/cards_home_print_A4.pdf",
+    "paper_width_mm": 210,
+    "paper_height_mm": 297,
+    "columns": 3,
+    "rows": 3,
+    "gutter_mm": 0,
+    "include_bleed": true,
+    "duplex_flip": "long-edge",
+    "_duplex_flip_options": "long-edge | short-edge — must match the setting chosen in the printer dialog",
+    "back_offset_x_mm": 0,
+    "back_offset_y_mm": 0,
+    "_back_offset_comment": "Use the alignment test page to measure your printer's duplex shift, then enter a correction here (positive x = move backs right, positive y = move backs down, as seen when looking at the back side).",
+    "packing": "gate-pure",
+    "_packing_comment": "gate-pure: every sheet holds cards of one gate only, so every back on a sheet is identical and a wrong flip setting can never pair a front with another gate's back.",
+    "fill_all_back_slots": true,
+    "crop_mark_length_mm": 4,
+    "crop_mark_offset_mm": 1,
+    "crop_mark_stroke_mm": 0.2,
+    "include_instructions": true,
+    "include_alignment_test": true
+  },
+  "print_shop": {
+    "output": "exports/cards_print_shop.pdf",
+    "layout": "one-card-per-page",
+    "page_order": "front-back-interleaved",
+    "_page_order_options": "front-back-interleaved (page 1 = card 1 front, page 2 = card 1 back, …) | fronts-then-backs (pages 1–180 = fronts, 181–360 = backs in the same card order)",
+    "slug_mm": 8,
+    "crop_marks": true,
+    "crop_mark_length_mm": 5,
+    "crop_mark_offset_mm": 3,
+    "crop_mark_stroke_mm": 0.15,
+    "slug_info_text": true,
+    "set_pdf_boxes": true,
+    "_note": "Generic professional defaults (3 mm bleed, crop marks outside the bleed, TrimBox/BleedBox set). Confirm colour profile, file format and imposition with the chosen printer before ordering."
+  },
+  "manual_cut_a3": {
+    "_comment": "Low-cost A3 sheets for cutting by hand: card FRONTS only (no backs, one-sided), printed at exactly card.trim_width_mm × card.trim_height_mm with no bleed. Built by `npm run build:a3` (also part of `npm run build`).",
+    "output": "exports/cards_manual_cut_A3.pdf",
+    "paper_width_mm": 297,
+    "paper_height_mm": 420,
+    "orientation": "auto",
+    "_orientation_options": "auto (whichever orientation fits more cards; on a tie, the one with wider margins) | portrait | landscape",
+    "cut_gap_mm": 6,
+    "_cut_gap_note": "Blank strip between neighbouring cards (waste). Each card gets its own outline, so there are two cuts per strip.",
+    "min_cut_gap_mm": 4,
+    "min_page_margin_mm": 10,
+    "_min_page_margin_note": "No card closer than this to the paper edge (most printers cannot print the outer 3–5 mm). The page labels sit in this margin, outside every card.",
+    "cut_line_stroke_mm": 0.25,
+    "_cut_line_note": "Thin navy outline drawn entirely OUTSIDE each card: its inner edge is the exact cut line, so no mark falls inside the finished card.",
+    "min_text_clearance_mm": 2,
+    "_min_text_clearance_note": "Checked in the layout and in the PDF: every text box, header labels included, must be at least this far inside the card edge. Question/answer text, category and footer are also checked against card.safe_margin_mm. The small header labels (GATE x, CARD · CARTE) sit about 2.3 mm inside the edge: that comes from the shared card design (src/cards.css) and is the same on every PDF.",
+    "packing": "continuous",
+    "_packing_options": "continuous (cards in data order, every sheet filled: fewest sheets) | gate-pure (each sheet holds one gate only: more paper)",
+    "ink_saver": true,
+    "_ink_saver_note": "true = white header with a thin rule instead of the solid navy/yellow bands, and white answer-card background (src/cards-ink-saver.css). false = the exact artwork of the other PDFs.",
+    "include_instructions": true,
+    "ruler_mm": 200,
+    "scale_bar_mm": 100
+  },
+  "spec_sheet": {
+    "output_pdf": "exports/print_specifications.pdf",
+    "output_md": "docs/PRINT_SPECIFICATIONS.md",
+    "contact_note": "Questions about these files: contact the International Fair organising team."
+  },
+  "browser": {
+    "_comment": "Optional: path to Chrome/Edge/Chromium for PDF rendering. Leave empty to auto-detect, or set the CHROME_PATH environment variable.",
+    "executable_path": ""
+  }
+}

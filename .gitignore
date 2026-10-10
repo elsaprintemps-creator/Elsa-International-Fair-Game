@@ -1,0 +1,13 @@
+node_modules/
+build/
+cards_source.zip
+data/backups/
+
+# Source spreadsheet stays local (not published); the cards use data/partners.json
+University Partners.xlsx
+
+# Local env files (machine-specific); the template stays tracked
+.env
+.env.local
+.env.*.local
+!.env.example

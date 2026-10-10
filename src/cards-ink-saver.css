@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Ink-saver variant of the card fronts — used only by the A3 manual-cut PDF
+   (scripts/build-manual-cut.mjs, when manual_cut_a3.ink_saver is true).
+   Scoped to .ink-saver, so the preview, home-print and print-shop artwork
+   are unchanged. Same layout, same palette, same text: only the large solid
+   areas become white or a pale tint, with a thin coloured rule instead.
+   ========================================================================== */
+
+/* Question + discussion cards: white header with navy text and a navy rule
+   (instead of a solid navy band). The yellow ID chip stays. */
+.ink-saver .card.front {
+  --hdr-bg: var(--c-white);
+  --hdr-ink: var(--c-navy);
+  --hdr-type: var(--c-teal-deep);
+  --hdr-rule: var(--c-navy);
+}
+
+/* Answer cards: pale-yellow header with a yellow rule and the navy ID chip,
+   so they still stand out from question cards; the card body is white
+   (instead of the pale-yellow tint over the whole card). */
+.ink-saver .card.type-answer {
+  --hdr-bg: var(--c-yellow-tint);
+  --hdr-ink: var(--c-navy);
+  --hdr-type: var(--c-navy);
+  --hdr-rule: var(--c-yellow);
+  background: var(--c-white);
+}
+
+.ink-saver .card.front .hdr {
+  box-sizing: border-box;
+  border-bottom: 0.7mm solid var(--hdr-rule);
+}
+.ink-saver .card.type-answer .hdr { border-bottom-width: 1.2mm; }

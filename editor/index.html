@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airport Gates — Card Editor</title>
+<meta name="description" content="Review and edit the English and French text of the International Fair 'Airport Gates' cards, then export the result as JSON or CSV.">
+<link rel="stylesheet" href="generated/card-kit.css">
+<link rel="stylesheet" href="editor.css">
+<script>window.__FIT_MANUAL__ = true;</script>
+<script src="generated/cards-data.js" defer></script>
+<script src="generated/card-kit.js" defer></script>
+<script src="generated/autofit.js" defer></script>
+<script src="editor.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#list">Skip to the cards</a>
+
+<header class="masthead">
+  <div class="wrap mast-inner">
+    <div>
+      <p class="eyebrow">International Fair · Airport Gates</p>
+      <h1>Card editor <span lang="fr">Éditeur de cartes</span></h1>
+      <p class="lede">Review and correct the English and French text of every card. Gates A–D have a question and a matching answer card; Gate E has open discussion questions only.</p>
+    </div>
+    <details class="help" id="help">
+      <summary>How saving works</summary>
+      <ol>
+        <li><b>Edit</b> any text box. A live preview shows the printed card and warns you if the text is too long.</li>
+        <li>Your edits are <b>saved automatically in this browser, on this computer only</b>. They are not sent anywhere, other people cannot see them, and clearing your browser data deletes them.</li>
+        <li>When you are done, click <b>Export JSON</b> and send the downloaded file to the project coordinator. <b>Export CSV</b> gives the same content for Excel; <b>Change list</b> lists only what you changed.</li>
+        <li>To continue on another computer, or to review someone else's file, use <b>Import JSON</b>.</li>
+      </ol>
+      <p>This page cannot change the project files directly: the coordinator replaces <code>data/cards.json</code> with your export and rebuilds the PDFs.</p>
+    </details>
+  </div>
+</header>
+
+<div class="notice" id="notice" role="status" hidden></div>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap toolbar-inner">
+    <div class="gate-tabs" role="group" aria-label="Show gate" id="gate-tabs"></div>
+    <div class="filters">
+      <label class="search"><span class="sr-only">Search cards</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="search" id="search" placeholder="Search ID, topic or text" autocomplete="off">
+      </label>
+      <label class="select"><span>Show</span>
+        <select id="show">
+          <option value="all">All cards</option>
+          <option value="edited">Edited cards</option>
+          <option value="problems">Cards that need attention</option>
+        </select>
+      </label>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-strong" id="export-json">Export JSON</button>
+      <button type="button" class="btn" id="export-csv">Export CSV</button>
+      <button type="button" class="btn" id="export-changes">Change list</button>
+      <button type="button" class="btn" id="import-json">Import JSON…</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+      <button type="button" class="btn btn-quiet" id="discard">Discard all edits</button>
+    </div>
+  </div>
+  <div class="statusbar"><div class="wrap" id="status" role="status" aria-live="polite">Loading cards…</div></div>
+</div>
+
+<div class="wrap layout">
+  <main id="list" class="list" aria-label="Cards"></main>
+  <aside class="pane" id="pane" aria-label="Live card preview">
+    <div class="pane-inner">
+      <div class="pane-head">
+        <h2 id="pane-title">Preview</h2>
+        <button type="button" class="pane-close" id="pane-close" aria-label="Close preview">Close</button>
+      </div>
+      <p class="pane-sub" id="pane-sub">Click into a card's text to preview it here.</p>
+      <div class="pane-cards" id="pane-cards"></div>
+      <ul class="pane-fit" id="pane-fit"></ul>
+    </div>
+  </aside>
+</div>
+
+<div id="measure" class="measure" aria-hidden="true"></div>
+<noscript><p class="noscript">This editor needs JavaScript. Without it, edit <code>data/cards.json</code> directly (see README.md).</p></noscript>
+</body>
+</html>

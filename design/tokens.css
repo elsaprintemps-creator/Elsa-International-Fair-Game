@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Design tokens — International Fair airport card game
+   Approved palette ONLY: turquoise/teal, navy, yellow, white, Bordeaux (Gate E).
+   Tints are print-safe lightened versions of the same hues.
+   The SVG card backs read these variables when inlined (with identical
+   fallback values when opened on their own).
+   ========================================================================== */
+:root {
+  /* Core palette */
+  --c-navy: #0B2545;
+  --c-teal-deep: #0B6F79;
+  --c-turquoise: #1FB5BE;
+  --c-yellow: #FFC93C;
+  --c-white: #FFFFFF;
+  --c-bordeaux: #6D071A;
+
+  /* Print-safe tints (same hues) */
+  --c-turquoise-tint: #D9F2F4;
+  --c-yellow-tint: #FFF6DB;
+
+  /* Gate colour arrangements: field = main colour, ink = text on field,
+     disc/icon = back motif, accent = small secondary details,
+     strip = colour band at the foot of each front. */
+  --gate-A-field: var(--c-turquoise);
+  --gate-A-ink: var(--c-navy);
+  --gate-A-accent: var(--c-yellow);
+
+  --gate-B-field: var(--c-navy);
+  --gate-B-ink: var(--c-white);
+  --gate-B-accent: var(--c-yellow);
+
+  --gate-C-field: var(--c-yellow);
+  --gate-C-ink: var(--c-navy);
+  --gate-C-accent: var(--c-turquoise);
+
+  --gate-D-field: var(--c-teal-deep);
+  --gate-D-ink: var(--c-white);
+  --gate-D-accent: var(--c-yellow);
+
+  --gate-E-field: var(--c-bordeaux);
+  --gate-E-ink: var(--c-white);
+  --gate-E-accent: var(--c-yellow);
+
+  /* Typography */
+  --font-sign: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-text: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+}

@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Card face styles (fronts) + shared card box.
+   Geometry variables (--card-w, --bleed, --safe, font sizes…) are injected
+   from config/print-settings.json at build time. Colours come from
+   design/tokens.css. Everything is in mm/pt so the preview and PDFs match.
+   ========================================================================== */
+
+.card {
+  --inset: calc(var(--bleed) + var(--safe));
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  overflow: hidden;
+  background: var(--c-white);
+  color: var(--c-navy);
+  font-family: var(--font-text);
+  /* Isolate the card from its container's text styles (e.g. gallery captions), which would otherwise
+     leak into the inline SVG backs. */
+  letter-spacing: normal;
+  text-transform: none;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Per-gate colour roles ------------------------------------------------- */
+.gate-A { --g-field: var(--gate-A-field); --g-ink: var(--gate-A-ink); --g-mark: var(--c-turquoise); --g-line: var(--c-turquoise); }
+.gate-B { --g-field: var(--gate-B-field); --g-ink: var(--gate-B-ink); --g-mark: var(--c-navy);      --g-line: var(--c-navy); }
+.gate-C { --g-field: var(--gate-C-field); --g-ink: var(--gate-C-ink); --g-mark: var(--c-yellow);    --g-line: var(--c-navy); }
+.gate-D { --g-field: var(--gate-D-field); --g-ink: var(--gate-D-ink); --g-mark: var(--c-teal-deep); --g-line: var(--c-teal-deep); }
+.gate-E { --g-field: var(--gate-E-field); --g-ink: var(--gate-E-ink); --g-mark: var(--c-bordeaux);  --g-line: var(--c-bordeaux); }
+
+/* Card-type roles ------------------------------------------------------- */
+.card.front { --hdr-bg: var(--c-navy); --hdr-ink: var(--c-white); --hdr-type: var(--c-yellow); --chip-bg: var(--c-yellow); --chip-ink: var(--c-navy); }
+.card.type-answer { --hdr-bg: var(--c-yellow); --hdr-ink: var(--c-navy); --hdr-type: var(--c-navy); --chip-bg: var(--c-navy); --chip-ink: var(--c-yellow); background: var(--c-yellow-tint); }
+
+/* Header: boarding-pass band ------------------------------------------- */
+/* The header content starts at the safe margin (like the sides), so no label is closer than --safe to the trim. */
+.hdr { position: absolute; left: 0; right: 0; top: 0; height: calc(var(--bleed) + var(--safe) + 11.7mm); background: var(--hdr-bg); }
+.hdr-inner {
+  position: absolute; left: var(--inset); right: var(--inset); top: calc(var(--bleed) + var(--safe)); height: 10mm;
+  display: flex; align-items: center; gap: 2mm;
+}
+.badge {
+  flex: none; width: 10mm; height: 10mm; border-radius: 1.6mm; box-sizing: border-box;
+  background: var(--g-field); border: 0.35mm solid var(--hdr-ink); color: var(--g-ink);
+  display: grid; place-items: center;
+}
+.badge svg { width: 7mm; height: 7mm; }
+.hdr-text { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 0.6mm; }
+.hdr-gate { font-family: var(--font-sign); font-weight: 800; font-size: 13.5pt; line-height: 0.95; letter-spacing: 0.02em; color: var(--hdr-ink); white-space: nowrap; }
+.hdr-type { font-family: var(--font-sign); font-weight: 700; font-size: 6.4pt; line-height: 1; letter-spacing: 0.1em; color: var(--hdr-type); white-space: nowrap; overflow: hidden; }
+.chip-wrap { flex: none; display: flex; flex-direction: column; align-items: center; gap: 0.5mm; }
+.chip-label { font-family: var(--font-sign); font-weight: 600; font-size: 4.6pt; letter-spacing: 0.12em; line-height: 1; color: var(--hdr-ink); white-space: nowrap; }
+.chip {
+  min-width: 11.5mm; height: 7.4mm; padding: 0 1.4mm; box-sizing: border-box; border-radius: 1.4mm;
+  background: var(--chip-bg); color: var(--chip-ink);
+  font-family: var(--font-sign); font-weight: 800; font-size: 15pt; line-height: 7.4mm; text-align: center; white-space: nowrap;
+}
+
+/* Category strip --------------------------------------------------------- */
+.cat {
+  position: absolute; left: var(--inset); right: var(--inset); top: calc(var(--bleed) + var(--safe) + 13.3mm);
+  padding-left: 2mm; border-left: 1.1mm solid var(--g-mark);
+}
+.cat-en { font-family: var(--font-sign); font-weight: 700; font-size: 6.4pt; line-height: 1.15; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-navy); white-space: nowrap; overflow: hidden; }
+.cat-fr { font-size: 5.9pt; line-height: 1.2; font-style: italic; color: var(--c-teal-deep); white-space: nowrap; overflow: hidden; }
+
+/* Body: the question / answer text -------------------------------------- */
+.body {
+  position: absolute; left: var(--inset); right: var(--inset);
+  top: calc(var(--bleed) + var(--safe) + 20.9mm); bottom: calc(var(--bleed) + 13.6mm);
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+}
+.body p { margin: 0; text-wrap: pretty; overflow-wrap: break-word; hyphens: manual; }
+.body .nw { white-space: nowrap; }
+.body .en { font-weight: 700; font-size: var(--fs-en); line-height: 1.22; color: var(--c-navy); }
+.body .fr { font-weight: 400; font-size: var(--fs-fr); line-height: 1.25; color: var(--c-teal-deep); }
+/* Language flag at the start of each sentence; sized in em so it shrinks with the text. */
+.body .flag {
+  display: inline-block; width: 1.35em; height: 0.9em; margin-right: 0.35em; vertical-align: -0.1em;
+  border-radius: 0.12em; overflow: hidden; box-shadow: 0 0 0 0.12mm rgba(11, 37, 69, 0.35);
+}
+.body .flag svg { display: block; width: 100%; height: 100%; }
+/* Multiple-choice options: one per line, wrapped text hangs under the letter. */
+.body .opts { display: block; margin-top: 0.2em; }
+.body .opt { display: block; padding-left: 1.3em; text-indent: -1.3em; }
+.type-question { --fs-en: var(--q-en-pt); --fs-fr: var(--q-fr-pt); }
+.type-answer   { --fs-en: var(--a-en-pt); --fs-fr: var(--a-fr-pt); }
+.type-discussion { --fs-en: var(--d-en-pt); --fs-fr: var(--d-fr-pt); }
+.divider { flex: none; display: flex; align-items: center; gap: 1.2mm; margin: 2.1mm 0; color: var(--g-line); }
+.divider::before, .divider::after { content: ""; flex: 1; border-top: 0.3mm dashed var(--g-line); }
+.divider svg { width: 3.2mm; height: 3.2mm; transform: rotate(90deg); }
+
+/* Footer: tear-off stub -------------------------------------------------- */
+.ftr { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--bleed) + 13mm); }
+.perf { position: absolute; left: 0; right: 0; top: 0; border-top: 0.3mm dashed var(--c-navy); opacity: 0.35; }
+.ftr-row {
+  position: absolute; left: var(--inset); right: var(--inset); top: 1.6mm; height: 7.6mm;
+  display: flex; align-items: center; justify-content: space-between; gap: 2mm;
+}
+.ftr-label { min-width: 0; display: flex; flex-direction: column; gap: 0.5mm; }
+.ftr-en { font-family: var(--font-sign); font-weight: 700; font-size: 6pt; letter-spacing: 0.06em; line-height: 1.05; text-transform: uppercase; color: var(--c-navy); }
+.ftr-fr { font-size: 5.6pt; font-style: italic; line-height: 1.1; color: var(--c-teal-deep); }
+.ftr .arr { display: inline-block; width: 1.5em; height: 0.66em; vertical-align: 0.06em; }
+.ftr-code { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5mm; color: var(--c-navy); }
+.ftr-code svg { width: 11mm; height: 3.8mm; display: block; }
+.ftr-code span { font-family: var(--font-sign); font-weight: 600; font-size: 4.4pt; letter-spacing: 0.14em; line-height: 1; white-space: nowrap; }
+.strip { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--bleed) + 2.4mm); background: var(--g-field); }
+
+/* Backs: inline SVG fills the bleed box ---------------------------------- */
+.card.back svg { display: block; width: 100%; height: 100%; }

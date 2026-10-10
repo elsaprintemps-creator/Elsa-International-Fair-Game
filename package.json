@@ -1,0 +1,34 @@
+{
+  "name": "international-fair-airport-cards",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Airport-themed bilingual (EN/FR) question card game for the university International Fair — 5 gates, 180 printable cards.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build:html": "node scripts/build.mjs",
+    "build:web": "node scripts/build-web.mjs",
+    "build:pdf": "node scripts/render-pdf.mjs",
+    "check:pdf": "node scripts/check-pdf.mjs",
+    "build:a3": "node scripts/build-manual-cut.mjs && node scripts/render-manual-cut.mjs && node scripts/check-manual-cut.mjs",
+    "check:a3": "node scripts/check-manual-cut.mjs",
+    "spec": "node scripts/print-spec.mjs",
+    "test:web": "node scripts/test-web.mjs",
+    "snapshots": "node scripts/pdf-snapshots.mjs",
+    "import-edits": "node scripts/import-edits.mjs",
+    "prototype": "node scripts/prototype.mjs",
+    "qc": "node scripts/qc-report.mjs",
+    "package": "node scripts/package.mjs",
+    "build": "node scripts/validate.mjs && node scripts/build.mjs && node scripts/build-web.mjs && node scripts/render-pdf.mjs && node scripts/check-pdf.mjs && node scripts/build-manual-cut.mjs && node scripts/render-manual-cut.mjs && node scripts/check-manual-cut.mjs && node scripts/print-spec.mjs && node scripts/test-web.mjs && node scripts/prototype.mjs && node scripts/qc-report.mjs && node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.2.5",
+    "@fontsource/barlow-condensed": "^5.2.5",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.10.38",
+    "puppeteer-core": "^24.10.0"
+  }
+}

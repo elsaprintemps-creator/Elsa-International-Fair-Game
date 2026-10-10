@@ -1,0 +1,1366 @@
+{
+  "meta": {
+    "source_file": "University Partners.xlsx (sheet 1, column A — 'University names where we have contract with them to send our students')",
+    "generated": "2026-10-10",
+    "legend": {
+      "knowledge-based": "Well-known institution; city/country assigned from general knowledge, not individually checked on the official website in this session.",
+      "web-checked": "Location confirmed via web search during authoring (URL in note).",
+      "needs-confirmation": "Ambiguous name or multi-campus institution — no campus-specific facts are used on any card. Please confirm."
+    },
+    "counts": {
+      "entries": 162,
+      "countries": 51
+    },
+    "countries": [
+      "Argentina",
+      "Australia",
+      "Austria",
+      "Belgium",
+      "Brazil",
+      "Bulgaria",
+      "Canada",
+      "Chile",
+      "China",
+      "China (mainland)",
+      "Colombia",
+      "Croatia",
+      "Cyprus",
+      "Czechia",
+      "Denmark",
+      "Dominican Republic",
+      "Egypt",
+      "Estonia",
+      "Finland",
+      "Germany",
+      "Greece",
+      "Hong Kong SAR",
+      "Hungary",
+      "Italy",
+      "Japan",
+      "Latvia",
+      "Lithuania",
+      "Macao SAR",
+      "Malaysia",
+      "Mexico",
+      "Morocco",
+      "Netherlands",
+      "North Macedonia",
+      "Norway",
+      "Panama",
+      "Peru",
+      "Poland",
+      "Portugal",
+      "Romania",
+      "Serbia",
+      "Slovakia",
+      "Slovenia",
+      "South Korea",
+      "Spain",
+      "Sweden",
+      "Switzerland",
+      "Taiwan",
+      "Türkiye",
+      "United Kingdom",
+      "Uruguay",
+      "Vietnam"
+    ]
+  },
+  "partners": [
+    {
+      "supplied_name": "UNIVERSIDAD CATOLICA DE CORDOBA",
+      "resolved_name": "Universidad Católica de Córdoba",
+      "city": "Córdoba",
+      "country": "Argentina",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD DE MENDOZA",
+      "resolved_name": "Universidad de Mendoza",
+      "city": "Mendoza",
+      "country": "Argentina",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MONASH UNIVERSITY",
+      "resolved_name": "Monash University",
+      "city": "Melbourne (Clayton & other campuses)",
+      "country": "Australia",
+      "verification": "knowledge-based",
+      "note": "Several campuses; card facts are Melbourne city-level only."
+    },
+    {
+      "supplied_name": "FHV Vorarlberg University of Applied Sciences",
+      "resolved_name": "FHV Vorarlberg University of Applied Sciences",
+      "city": "Dornbirn",
+      "country": "Austria",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HOWEST UNIVERSITY OF APPLIED SCIENCES",
+      "resolved_name": "Howest University of Applied Sciences",
+      "city": "Kortrijk / Bruges",
+      "country": "Belgium",
+      "verification": "needs-confirmation",
+      "note": "Multiple campuses (Kortrijk, Bruges); campus not specified — no campus-specific facts used."
+    },
+    {
+      "supplied_name": "KU LEUVEN, FACULTY OF ECONOMICS & BUSINESS",
+      "resolved_name": "KU Leuven, Faculty of Economics & Business",
+      "city": "Leuven (FEB also teaches in Brussels, Antwerp, Ghent)",
+      "country": "Belgium",
+      "verification": "needs-confirmation",
+      "note": "FEB has several campuses; only Belgium-wide facts used."
+    },
+    {
+      "supplied_name": "UCLOUVAIN SAINT-LOUIS BRUXELLES",
+      "resolved_name": "UCLouvain Saint-Louis Bruxelles",
+      "city": "Brussels",
+      "country": "Belgium",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF ANTWERP",
+      "resolved_name": "University of Antwerp",
+      "city": "Antwerp",
+      "country": "Belgium",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "GHENT UNIVERSITY",
+      "resolved_name": "Ghent University",
+      "city": "Ghent",
+      "country": "Belgium",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS (PUC MINAS)",
+      "resolved_name": "Pontifícia Universidade Católica de Minas Gerais",
+      "city": "Belo Horizonte (main)",
+      "country": "Brazil",
+      "verification": "knowledge-based",
+      "note": "Card fact is state-level (Minas Gerais)."
+    },
+    {
+      "supplied_name": "PONTIFÍCIA UNIVERSIDADE CATÓLICA DO PARANÁ (PUCPR)",
+      "resolved_name": "Pontifícia Universidade Católica do Paraná",
+      "city": "Curitiba (main)",
+      "country": "Brazil",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SOFIA UNIVERSITY ST. KLIMENT OHRIDSKI",
+      "resolved_name": "Sofia University \"St. Kliment Ohridski\"",
+      "city": "Sofia",
+      "country": "Bulgaria",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "AMERICAN UNIVERSITY IN BULGARIA",
+      "resolved_name": "American University in Bulgaria",
+      "city": "Blagoevgrad",
+      "country": "Bulgaria",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MACEWAN UNIVERSITY",
+      "resolved_name": "MacEwan University",
+      "city": "Edmonton",
+      "country": "Canada",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÉ D'ALBERTA - CAMPUS SAINT JEAN",
+      "resolved_name": "University of Alberta — Campus Saint-Jean",
+      "city": "Edmonton",
+      "country": "Canada",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÉ DE SHERBROOKE",
+      "resolved_name": "Université de Sherbrooke",
+      "city": "Sherbrooke",
+      "country": "Canada",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÉ LAVAL",
+      "resolved_name": "Université Laval",
+      "city": "Québec City",
+      "country": "Canada",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "YORK UNIVERSITY",
+      "resolved_name": "York University",
+      "city": "Toronto",
+      "country": "Canada",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD TECNICA FEDERICO SANTA MARIA",
+      "resolved_name": "Universidad Técnica Federico Santa María",
+      "city": "Valparaíso (main; also Santiago & others)",
+      "country": "Chile",
+      "verification": "knowledge-based",
+      "note": "Card fact (ascensores) is Valparaíso city-level."
+    },
+    {
+      "supplied_name": "UNIVERSIDAD CATOLICA DEL MAULE (UCM)",
+      "resolved_name": "Universidad Católica del Maule",
+      "city": "Talca",
+      "country": "Chile",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD CATÓLICA DEL NORTE (UCN)",
+      "resolved_name": "Universidad Católica del Norte",
+      "city": "Antofagasta (main; also Coquimbo)",
+      "country": "Chile",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SOUTHWESTERN UNIVERSITY OF FINANCE AND ECONOMICS",
+      "resolved_name": "Southwestern University of Finance and Economics (SWUFE)",
+      "city": "Chengdu",
+      "country": "China",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "PONTIFICIA UNIVERSIDAD JAVERIANA CALI",
+      "resolved_name": "Pontificia Universidad Javeriana Cali",
+      "city": "Cali",
+      "country": "Colombia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SVEUCILISTE VERN (VERN UNIVERSITY)",
+      "resolved_name": "Sveučilište VERN'",
+      "city": "Zagreb",
+      "country": "Croatia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF DUBROVNIK",
+      "resolved_name": "University of Dubrovnik",
+      "city": "Dubrovnik",
+      "country": "Croatia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF SPLIT",
+      "resolved_name": "University of Split",
+      "city": "Split",
+      "country": "Croatia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "PAPHOS - NEAPOLIS UNIVERSITY PAFOS (NUP)",
+      "resolved_name": "Neapolis University Pafos",
+      "city": "Paphos",
+      "country": "Cyprus",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "CZECH UNIVERSITY Of LIFE SCIENCES",
+      "resolved_name": "Czech University of Life Sciences Prague",
+      "city": "Prague",
+      "country": "Czechia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "METROPOLITAN UNIVERSITY PRAGUE",
+      "resolved_name": "Metropolitan University Prague",
+      "city": "Prague",
+      "country": "Czechia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF WEST BOHEMIA",
+      "resolved_name": "University of West Bohemia",
+      "city": "Plzeň",
+      "country": "Czechia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF SOUTHERN DENMARK (SDU)",
+      "resolved_name": "University of Southern Denmark",
+      "city": "Odense (main; also Kolding, Sønderborg, Esbjerg, Slagelse)",
+      "country": "Denmark",
+      "verification": "needs-confirmation",
+      "note": "Campus not specified — only Denmark-wide facts used."
+    },
+    {
+      "supplied_name": "ZEALAND",
+      "resolved_name": "Zealand — Academy of Technologies and Business",
+      "city": "Køge (HQ); campuses incl. Roskilde, Næstved, Slagelse, Nykøbing F., Holbæk",
+      "country": "Denmark",
+      "verification": "needs-confirmation",
+      "note": "Name supplied as \"ZEALAND\"; matched to Zealand Academy of Technologies and Business (web-checked). Campus not specified."
+    },
+    {
+      "supplied_name": "INSTITUTO TECNOLÓGICO DE SANTO DOMINGO (INTEC)",
+      "resolved_name": "Instituto Tecnológico de Santo Domingo",
+      "city": "Santo Domingo",
+      "country": "Dominican Republic",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MISR INTERNATIONAL UNIVERSITY",
+      "resolved_name": "Misr International University",
+      "city": "Cairo",
+      "country": "Egypt",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TALLIN - ESTONIAN BUSINESS SCHOOL",
+      "resolved_name": "Estonian Business School",
+      "city": "Tallinn",
+      "country": "Estonia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TARTU UNIVERSITY",
+      "resolved_name": "University of Tartu",
+      "city": "Tartu",
+      "country": "Estonia",
+      "verification": "web-checked",
+      "note": "Founded 1632 — https://ut.ee/en/content/university-numbers"
+    },
+    {
+      "supplied_name": "UNIVERSITY OF HELSINKI - HELSINGIN YLIOPISTO",
+      "resolved_name": "University of Helsinki",
+      "city": "Helsinki",
+      "country": "Finland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF VAASA",
+      "resolved_name": "University of Vaasa",
+      "city": "Vaasa",
+      "country": "Finland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "FREIE UNIVERSITÄT BERLIN, SCHOOL OF BUSINESS & ECONOMICS",
+      "resolved_name": "Freie Universität Berlin, School of Business & Economics",
+      "city": "Berlin",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HOCHSCHULE RUHR WEST",
+      "resolved_name": "Hochschule Ruhr West",
+      "city": "Mülheim an der Ruhr / Bottrop",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LEIPZIG UNIVERSITY OF APPLIED SCIENCES (HTWK LEIPZIG)",
+      "resolved_name": "HTWK Leipzig",
+      "city": "Leipzig",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "OTTO-FRIEDRICH-UNIVERSITÄT BAMBERG",
+      "resolved_name": "Otto-Friedrich-Universität Bamberg",
+      "city": "Bamberg",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TECHNISCHE HOCHSCHULE AUGSBURG / TECHNICAL UNIVERSITY OF APPLIED SCIENCES AUGSBURG",
+      "resolved_name": "Technische Hochschule Augsburg",
+      "city": "Augsburg",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TECHNISCHE HOCHSCHULE KÖLN (TH KÖLN) UNIVERSITY OF APPLIED SCIENCES",
+      "resolved_name": "TH Köln",
+      "city": "Cologne",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": "Appears twice in the supplied list (also \"TH KÖLN UNIVERSITY OF APPLIED SCIENCES\")."
+    },
+    {
+      "supplied_name": "UNIVERSITY OF MÜNSTER/SCHOOL AND BUSINESS AND ECONOMICS",
+      "resolved_name": "University of Münster, School of Business and Economics",
+      "city": "Münster",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF BAYREUTH",
+      "resolved_name": "University of Bayreuth",
+      "city": "Bayreuth",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF ERFURT",
+      "resolved_name": "University of Erfurt",
+      "city": "Erfurt",
+      "country": "Germany",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ATHENS UNIVERSITY OF ECONOMICS AND BUSINESS",
+      "resolved_name": "Athens University of Economics and Business",
+      "city": "Athens",
+      "country": "Greece",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF THESSALY",
+      "resolved_name": "University of Thessaly",
+      "city": "Volos (main; also Larissa, Trikala, Karditsa, Lamia)",
+      "country": "Greece",
+      "verification": "needs-confirmation",
+      "note": "Campus not specified — only Greece-wide facts used."
+    },
+    {
+      "supplied_name": "THE CHINESE UNIVERSITY OF HONG KONG",
+      "resolved_name": "The Chinese University of Hong Kong",
+      "city": "Hong Kong (Sha Tin)",
+      "country": "Hong Kong SAR",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LINGNAN UNIVERSITY",
+      "resolved_name": "Lingnan University",
+      "city": "Hong Kong (Tuen Mun)",
+      "country": "Hong Kong SAR",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "BEIJING NORMAL HONG KONG BAPTIST UNIVERSITY (BNBU)",
+      "resolved_name": "Beijing Normal–Hong Kong Baptist University (formerly UIC)",
+      "city": "Zhuhai, Guangdong",
+      "country": "China (mainland)",
+      "verification": "web-checked",
+      "note": "Listed with Hong Kong partners but located in Zhuhai, mainland China — https://www.bnbu.edu.cn/en/about_us/overview/introducing.htm"
+    },
+    {
+      "supplied_name": "BME BUDAPEST UNIVERSITY OF TECHNOLOGY AND ECONOMICS",
+      "resolved_name": "Budapest University of Technology and Economics",
+      "city": "Budapest",
+      "country": "Hungary",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "BUDAPEST - BBU FACULTY OF FINANCE AND ACCOUNTING (FFA)",
+      "resolved_name": "Budapest Business University — Faculty of Finance and Accountancy",
+      "city": "Budapest",
+      "country": "Hungary",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "BUDAPEST - BBU FACULTY OF INTERNATIONAL MANAGEMENT & BUSINESS (FIMB)",
+      "resolved_name": "Budapest Business University — Faculty of International Management and Business",
+      "city": "Budapest",
+      "country": "Hungary",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "CAGLIARI - UNIVERSITÀ DEGLI STUDI DI CAGLIARI",
+      "resolved_name": "Università degli Studi di Cagliari",
+      "city": "Cagliari (Sardinia)",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LIBERA UNIVERSITA' MARIA SS. ASSUNTA (LUMSA)",
+      "resolved_name": "LUMSA University",
+      "city": "Rome",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "PARME - UNIVERSITÀ DEGLI STUDI DI PARMA",
+      "resolved_name": "Università degli Studi di Parma",
+      "city": "Parma",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "POLITECNICO DI MILANO",
+      "resolved_name": "Politecnico di Milano",
+      "city": "Milan",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ CATTOLICA DEL SACRO CUORE",
+      "resolved_name": "Università Cattolica del Sacro Cuore",
+      "city": "Milan (main; also Rome, Brescia, Piacenza-Cremona)",
+      "country": "Italy",
+      "verification": "needs-confirmation",
+      "note": "Campus not specified."
+    },
+    {
+      "supplied_name": "UNIVERSITA DEGLI STUDI DELLA TUSCIA",
+      "resolved_name": "Università degli Studi della Tuscia",
+      "city": "Viterbo",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI BOLOGNA 'ALMA MATER STUDIORUM'",
+      "resolved_name": "Alma Mater Studiorum — Università di Bologna",
+      "city": "Bologna (also Romagna campuses)",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI FIRENZE",
+      "resolved_name": "Università degli Studi di Firenze",
+      "city": "Florence",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI MODENA E REGGIO EMILIA",
+      "resolved_name": "Università degli Studi di Modena e Reggio Emilia",
+      "city": "Modena / Reggio Emilia",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI NAPOLI 'PARTHENOPE'",
+      "resolved_name": "Università degli Studi di Napoli \"Parthenope\"",
+      "city": "Naples",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI ROMA 'LA SAPIENZA'",
+      "resolved_name": "Sapienza Università di Roma",
+      "city": "Rome",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITÀ DEGLI STUDI DI TERAMO",
+      "resolved_name": "Università degli Studi di Teramo",
+      "city": "Teramo",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF PAVIA",
+      "resolved_name": "University of Pavia",
+      "city": "Pavia",
+      "country": "Italy",
+      "verification": "web-checked",
+      "note": "Volta's chair — https://en.wikipedia.org/wiki/Alessandro_Volta"
+    },
+    {
+      "supplied_name": "UNIVERSITA DEGLI STUDI DI VERONA",
+      "resolved_name": "Università degli Studi di Verona",
+      "city": "Verona",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITA DEGLI STUDI DI TORINO",
+      "resolved_name": "Università degli Studi di Torino",
+      "city": "Turin",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LINK CAMPUS UNIVERSITY",
+      "resolved_name": "Link Campus University",
+      "city": "Rome",
+      "country": "Italy",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KANAGAWA UNIVERSITY (KU)",
+      "resolved_name": "Kanagawa University",
+      "city": "Yokohama",
+      "country": "Japan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MEIJI UNIVERSITY",
+      "resolved_name": "Meiji University",
+      "city": "Tokyo",
+      "country": "Japan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SOPHIA UNIVERSITY",
+      "resolved_name": "Sophia University",
+      "city": "Tokyo",
+      "country": "Japan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "RIGA - STOCKHOLM SCHOOL OF ECONOMICS",
+      "resolved_name": "Stockholm School of Economics in Riga",
+      "city": "Riga",
+      "country": "Latvia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "RIGA - UNIVERSITY OF LATVIA",
+      "resolved_name": "University of Latvia",
+      "city": "Riga",
+      "country": "Latvia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KAUNAS UNIVERSITY OF TECHNOLOGY",
+      "resolved_name": "Kaunas University of Technology",
+      "city": "Kaunas",
+      "country": "Lithuania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LCC INTERNATIONAL UNIVERSITY",
+      "resolved_name": "LCC International University",
+      "city": "Klaipėda",
+      "country": "Lithuania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "VILNIUS GEDIMINAS TECHNICAL UNIVERSITY (VILNIUS TECH)",
+      "resolved_name": "Vilnius Gediminas Technical University (VILNIUS TECH)",
+      "city": "Vilnius",
+      "country": "Lithuania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MACAO POLYTECHNIC UNIVERSITY",
+      "resolved_name": "Macao Polytechnic University",
+      "city": "Macao",
+      "country": "Macao SAR",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TAYLOR'S UNIVERSITY",
+      "resolved_name": "Taylor's University",
+      "city": "Subang Jaya (Greater Kuala Lumpur)",
+      "country": "Malaysia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD DEL VALLE DE ATEMAJAC UNIVA",
+      "resolved_name": "Universidad del Valle de Atemajac (UNIVA)",
+      "city": "Guadalajara / Zapopan (main)",
+      "country": "Mexico",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "FACULTY OF GOVERNANCE, ECONOMICS & SOCIAL SCIENCES - UNIVERSITY MOHAMMED VI POLYTECHNIC",
+      "resolved_name": "UM6P — Faculty of Governance, Economics and Social Sciences (FGSES)",
+      "city": "Rabat",
+      "country": "Morocco",
+      "verification": "web-checked",
+      "note": "FGSES is in Rabat (UM6P main campus is Ben Guerir) — https://www.ecoactu.ma/um6p-rabat-accueille-la-faculte-de-gouvernance-des-sciences-economiques-et-sociales/"
+    },
+    {
+      "supplied_name": "BREDA - AVANS UNIVERSITY OF APPLIED SCIENCES",
+      "resolved_name": "Avans University of Applied Sciences",
+      "city": "Breda (as supplied; also 's-Hertogenbosch, Tilburg)",
+      "country": "Netherlands",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HAN UNIVERSITY OF APPLIED SCIENCES",
+      "resolved_name": "HAN University of Applied Sciences",
+      "city": "Arnhem / Nijmegen",
+      "country": "Netherlands",
+      "verification": "needs-confirmation",
+      "note": "Two main campuses — campus not specified."
+    },
+    {
+      "supplied_name": "TILBURG - FONTYS SCHOOL OF ECONOMICS",
+      "resolved_name": "Fontys School of Economics",
+      "city": "Tilburg (as supplied)",
+      "country": "Netherlands",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SKOPJE - UNIVERSITY AMERICAN COLLEGE SKOPJE (UACS)",
+      "resolved_name": "University American College Skopje",
+      "city": "Skopje",
+      "country": "North Macedonia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "NORGES TEKNISK-NATURVITENSKAPELIGE UNIVERSITET - NTNU",
+      "resolved_name": "Norwegian University of Science and Technology (NTNU)",
+      "city": "Trondheim (main; also Gjøvik, Ålesund)",
+      "country": "Norway",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "STAVANGER - UNIVERSITY OF STAVANGER",
+      "resolved_name": "University of Stavanger",
+      "city": "Stavanger",
+      "country": "Norway",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ADEN UNIVERSITY",
+      "resolved_name": "ADEN University",
+      "city": "Panama City",
+      "country": "Panama",
+      "verification": "needs-confirmation",
+      "note": "Supplied list is grouped by country and places it between Norway and Peru; directories list ADEN University in Panama City. Not confirmed on an official site — please confirm. (Not to be confused with the University of Aden, Yemen.)"
+    },
+    {
+      "supplied_name": "ESAN UNIVERSITY",
+      "resolved_name": "Universidad ESAN",
+      "city": "Lima",
+      "country": "Peru",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD PERUANA DE CIENCIAS APLICADAS UPC",
+      "resolved_name": "Universidad Peruana de Ciencias Aplicadas",
+      "city": "Lima",
+      "country": "Peru",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "CRACOVIE - JAGIELLONIAN UNIVERSITY",
+      "resolved_name": "Jagiellonian University",
+      "city": "Kraków",
+      "country": "Poland",
+      "verification": "web-checked",
+      "note": "Founded 1364 — https://copernicus.torun.pl/en/biography/copernicus-in-krakow-1491-1495/studies-at-krakow-university"
+    },
+    {
+      "supplied_name": "KATOWICE - UNIVERSITY OF ECONOMICS IN KATOWICE",
+      "resolved_name": "University of Economics in Katowice",
+      "city": "Katowice",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KOZMINSKI UNIVERSITY",
+      "resolved_name": "Kozminski University",
+      "city": "Warsaw",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "POLONIA UNIVERSITY - Akademia Polonijna w Częstochowie",
+      "resolved_name": "Akademia Polonijna w Częstochowie (Polonia University)",
+      "city": "Częstochowa",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "WARSAW SCHOOL OF ECONOMICS (SGH)",
+      "resolved_name": "SGH Warsaw School of Economics",
+      "city": "Warsaw",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "WARSAW UNIVERSITY OF LIFE SCIENCES",
+      "resolved_name": "Warsaw University of Life Sciences (SGGW)",
+      "city": "Warsaw",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "WROCLAW - WROCLAW UNIVERSITY OF ECONOMICS AND BUSINESS (WUEB)",
+      "resolved_name": "Wroclaw University of Economics and Business",
+      "city": "Wrocław",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "WSB MERITO UNIVERSITY IN WROCLAW",
+      "resolved_name": "WSB Merito University in Wrocław",
+      "city": "Wrocław",
+      "country": "Poland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "PORTO ACCOUNTING AND BUSINESS SCHOOL - POLYTECHNIC OF PORTO",
+      "resolved_name": "Porto Accounting and Business School (ISCAP), Polytechnic of Porto",
+      "city": "Porto metropolitan area (Matosinhos)",
+      "country": "Portugal",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "BUCAREST UNIVERSITY OF ECONOMIC STUDIES",
+      "resolved_name": "Bucharest University of Economic Studies",
+      "city": "Bucharest",
+      "country": "Romania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "Politehnica University Timisoara",
+      "resolved_name": "Politehnica University of Timișoara",
+      "city": "Timișoara",
+      "country": "Romania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY BABES-BOLYAI (UBB)",
+      "resolved_name": "Babeș-Bolyai University",
+      "city": "Cluj-Napoca",
+      "country": "Romania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF ALBA IULIA",
+      "resolved_name": "\"1 Decembrie 1918\" University of Alba Iulia",
+      "city": "Alba Iulia",
+      "country": "Romania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY POLITEHNICA OF BUCHAREST",
+      "resolved_name": "National University of Science and Technology Politehnica Bucharest",
+      "city": "Bucharest",
+      "country": "Romania",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "THE UNIVERSITY OF BELGRADE",
+      "resolved_name": "University of Belgrade",
+      "city": "Belgrade",
+      "country": "Serbia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "BRATISLAVA - COMENIUS UNIVERSITY",
+      "resolved_name": "Comenius University Bratislava",
+      "city": "Bratislava",
+      "country": "Slovakia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "TECHNICAL UNIVERSITY OF KOŠICE",
+      "resolved_name": "Technical University of Košice",
+      "city": "Košice",
+      "country": "Slovakia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF ECONOMICS IN BRATISLAVA",
+      "resolved_name": "University of Economics in Bratislava",
+      "city": "Bratislava",
+      "country": "Slovakia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERZA V MARIBORU",
+      "resolved_name": "University of Maribor",
+      "city": "Maribor",
+      "country": "Slovenia",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "CHUNG ANG UNIVERSITY (CAU)",
+      "resolved_name": "Chung-Ang University",
+      "city": "Seoul (main; also Anseong)",
+      "country": "South Korea",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "JEONBUK NATIONAL UNIVERSITY",
+      "resolved_name": "Jeonbuk National University",
+      "city": "Jeonju",
+      "country": "South Korea",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KOOKMIN UNIVERSITY",
+      "resolved_name": "Kookmin University",
+      "city": "Seoul",
+      "country": "South Korea",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MYONGJI UNIVERSITY",
+      "resolved_name": "Myongji University",
+      "city": "Seoul / Yongin",
+      "country": "South Korea",
+      "verification": "needs-confirmation",
+      "note": "Two campuses — campus not specified."
+    },
+    {
+      "supplied_name": "UNIVERSITY OF SEOUL",
+      "resolved_name": "University of Seoul",
+      "city": "Seoul",
+      "country": "South Korea",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SEJONG UNIVERSITY",
+      "resolved_name": "Sejong University",
+      "city": "Seoul",
+      "country": "South Korea",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SKKU",
+      "resolved_name": "Sungkyunkwan University",
+      "city": "Seoul / Suwon",
+      "country": "South Korea",
+      "verification": "needs-confirmation",
+      "note": "Two campuses (Humanities & Social Sciences in Seoul; Natural Sciences in Suwon) — campus not specified."
+    },
+    {
+      "supplied_name": "CUNEF UNIVERSITY (E MADRID236)",
+      "resolved_name": "CUNEF Universidad",
+      "city": "Madrid",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ESCI-UPF",
+      "resolved_name": "ESCI-UPF (Universitat Pompeu Fabra)",
+      "city": "Barcelona",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "EUM ESCOLA UNIVERSITARIA MEDITERRANI",
+      "resolved_name": "Escola Universitària Mediterrani",
+      "city": "Barcelona",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "IE UNIVERSITY",
+      "resolved_name": "IE University",
+      "city": "Madrid / Segovia",
+      "country": "Spain",
+      "verification": "needs-confirmation",
+      "note": "Two campuses — campus not specified."
+    },
+    {
+      "supplied_name": "UNIVERSIDAD CATÓLICA DE VALENCIA",
+      "resolved_name": "Universidad Católica de Valencia San Vicente Mártir",
+      "city": "Valencia",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD CEU SAN PABLO",
+      "resolved_name": "Universidad CEU San Pablo",
+      "city": "Madrid",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD DA CORUÑA",
+      "resolved_name": "Universidade da Coruña",
+      "city": "A Coruña",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD EUROPEA DE MADRID",
+      "resolved_name": "Universidad Europea de Madrid",
+      "city": "Madrid",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD EUROPEA DE VALENCIA",
+      "resolved_name": "Universidad Europea de Valencia",
+      "city": "Valencia",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD FRANCISCO DE VITORIA (UFV)",
+      "resolved_name": "Universidad Francisco de Vitoria",
+      "city": "Pozuelo de Alarcón (Madrid)",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD LOYOLA ANDALUCÍA",
+      "resolved_name": "Universidad Loyola Andalucía",
+      "city": "Seville / Córdoba",
+      "country": "Spain",
+      "verification": "needs-confirmation",
+      "note": "Two campuses — campus not specified."
+    },
+    {
+      "supplied_name": "UNIVERSIDAD PONTIFICIA COMILLAS",
+      "resolved_name": "Universidad Pontificia Comillas",
+      "city": "Madrid",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSIDAD PONTIFICIA DE SALAMANCA",
+      "resolved_name": "Universidad Pontificia de Salamanca",
+      "city": "Salamanca",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITAT POLITÈCNICA DE VALÈNCIA",
+      "resolved_name": "Universitat Politècnica de València",
+      "city": "Valencia",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY CEU CARDENAL HERRERA",
+      "resolved_name": "Universidad CEU Cardenal Herrera",
+      "city": "Valencia area (also Elche, Castellón)",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF ZARAGOZA - SCHOOL OF ECONOMICS AND BUSINESS",
+      "resolved_name": "University of Zaragoza, School of Economics and Business",
+      "city": "Zaragoza",
+      "country": "Spain",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KARLSTAD UNIVERSITY",
+      "resolved_name": "Karlstad University",
+      "city": "Karlstad",
+      "country": "Sweden",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HAUTE ECOLE DE GESTION DE GENÈVE",
+      "resolved_name": "Haute école de gestion de Genève (HES-SO)",
+      "city": "Geneva",
+      "country": "Switzerland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HESSO- HAUTE ÉCOLE DE GESTION- FRIBOURG",
+      "resolved_name": "Haute école de gestion Fribourg (HES-SO)",
+      "city": "Fribourg",
+      "country": "Switzerland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "LUCERNE - HOCHSCHULE LUZERN (HSLU)",
+      "resolved_name": "Lucerne University of Applied Sciences and Arts (HSLU)",
+      "city": "Lucerne",
+      "country": "Switzerland",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "SCUOLA UNIVERSITARIA PROFESSIONALE DELLA SVIZZERA ITALIANA (SUPSI)",
+      "resolved_name": "SUPSI",
+      "city": "Canton Ticino (Lugano area / Mendrisio)",
+      "country": "Switzerland",
+      "verification": "knowledge-based",
+      "note": "Card fact is canton-level (Ticino)."
+    },
+    {
+      "supplied_name": "NATIONAL CHI NAN UNIVERSITY (NCNU)",
+      "resolved_name": "National Chi Nan University",
+      "city": "Puli, Nantou County",
+      "country": "Taiwan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "NATIONAL CHUNG CHENG UNIVERSITY (CCU)",
+      "resolved_name": "National Chung Cheng University",
+      "city": "Minxiong, Chiayi County",
+      "country": "Taiwan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "NATIONAL TAIPEI UNIVERSITY OF BUSINESS",
+      "resolved_name": "National Taipei University of Business",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "GALATASARAY UNIVERSITESI",
+      "resolved_name": "Galatasaray University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "HACETTEPE UNIVERSITY",
+      "resolved_name": "Hacettepe University",
+      "city": "Ankara",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ISTANBUL AYDIN UNIVERSITY",
+      "resolved_name": "Istanbul Aydın University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ISTANBUL COMMERCE UNIVERSITY (TICARET)",
+      "resolved_name": "Istanbul Commerce University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ISTANBUL MEDIPOL UNIVERSITY",
+      "resolved_name": "Istanbul Medipol University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "IZMIR - DOKUZ EYLUL UNIVERSITY",
+      "resolved_name": "Dokuz Eylül University",
+      "city": "İzmir",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "KOÇ UNIVERSITY",
+      "resolved_name": "Koç University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MARMARA UNIVERSITY",
+      "resolved_name": "Marmara University",
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ANKARA BILKENT UNIVERSITY",
+      "resolved_name": "Bilkent University",
+      "city": "Ankara",
+      "country": "Türkiye",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "ANGLIA RUSKIN UNIVERSITY HIGHER EDUCATION CORPORATION (ARU)",
+      "resolved_name": "Anglia Ruskin University",
+      "city": "Cambridge / Chelmsford / Peterborough / London",
+      "country": "United Kingdom",
+      "verification": "needs-confirmation",
+      "note": "Several campuses — campus not specified."
+    },
+    {
+      "supplied_name": "CANTERBURY CHRIST CHURCH UNIVERSITY",
+      "resolved_name": "Canterbury Christ Church University",
+      "city": "Canterbury",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "JOHN MOORES UNIVERSITYS",
+      "resolved_name": "Liverpool John Moores University",
+      "city": "Liverpool",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": "Name supplied with a typo (\"UNIVERSITYS\"); resolved as Liverpool John Moores University."
+    },
+    {
+      "supplied_name": "LOUGHBOROUGH UNIVERSITY",
+      "resolved_name": "Loughborough University",
+      "city": "Loughborough",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "THE UNIVERSITY OF LEEDS",
+      "resolved_name": "University of Leeds",
+      "city": "Leeds",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF HEDFORSHIRE",
+      "resolved_name": "UNRESOLVED — University of Bedfordshire or University of Hertfordshire?",
+      "city": "Luton/Bedford or Hatfield",
+      "country": "United Kingdom",
+      "verification": "needs-confirmation",
+      "note": "\"Hedforshire\" does not exist; could be Bedfordshire (Luton, Bedford) or Hertfordshire (Hatfield). Please confirm. Not used in any card."
+    },
+    {
+      "supplied_name": "UNIVERSITY OF GLASGOW",
+      "resolved_name": "University of Glasgow",
+      "city": "Glasgow",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF GREENWICH",
+      "resolved_name": "University of Greenwich",
+      "city": "London (Greenwich; also Medway)",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "UNIVERSITY OF WARWICK",
+      "resolved_name": "University of Warwick",
+      "city": "Coventry",
+      "country": "United Kingdom",
+      "verification": "knowledge-based",
+      "note": ""
+    },
+    {
+      "supplied_name": "MONTEVIDEO - UTEC",
+      "resolved_name": "Universidad Tecnológica del Uruguay (UTEC)",
+      "city": "Montevideo (as supplied; UTEC is mainly based in Uruguay's interior regions)",
+      "country": "Uruguay",
+      "verification": "needs-confirmation",
+      "note": "UTEC has a Montevideo office/global centre but most teaching sites are in the interior; confirm the host site. Not to be confused with UTEC Lima (Peru). Only Uruguay-wide facts used."
+    },
+    {
+      "supplied_name": "VAN LANG UNIVERSITY",
+      "resolved_name": "Van Lang University",
+      "city": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "verification": "knowledge-based",
+      "note": ""
+    }
+  ]
+}
